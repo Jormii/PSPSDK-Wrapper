@@ -8,9 +8,9 @@
 typedef struct PSPInput
 {
     unsigned int timeStamp;
-    PSPButtonsData *buttonsData;
-    PSPAnalogStickData *analogStickData;
-    PSPSettingButtonsData *settingButtonsData;
+    PSPButtonsData buttonsData;
+    PSPAnalogStickData analogStickData;
+    PSPSettingButtonsData settingButtonsData;
 } PSPInput;
 
 void initInput(PSPAnalogStickSamplingMode samplingMode);

@@ -14,22 +14,23 @@ int main()
 {
     pspDebugScreenInit();
     setupExitCallback();
+
+    pspDebugScreenSetXY(1, 1);
+    printf("[ DEBUG ]\n");
+
+    pspDebugScreenSetXY(1, 3);
+
     initInput(ANALOG_SAMPLING);
-
-    pspDebugScreenSetXY(15, 15);
-    printf("[ DEBUG ]");
-
-    pspDebugScreenSetXY(15, 40);
-
     while (isRunning())
     {
+        updateInput();
         if (buttonIsPressed(CROSS_BUTTON))
         {
-            printf("CROSS");
+            printf("CROSS\n");
         }
         else if (buttonIsPressed(SQUARE_BUTTON))
         {
-            printf("SQUARE");
+            printf("SQUARE\n");
         }
     }
 
