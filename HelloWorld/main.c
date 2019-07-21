@@ -18,10 +18,14 @@ int main(void)
     pspDebugScreenInit();
     setupExitCallback();
 
+    char c;
+    for (c = '0'; c <= '{'; ++c)
+    {
+        printf("%c", c);
+    }
+
     while (isRunning())
     {
-        pspDebugScreenSetXY(0, 0);
-        printf("Hello World!");
         sceDisplayWaitVblankStart();
     }
 

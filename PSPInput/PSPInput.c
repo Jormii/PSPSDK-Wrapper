@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "./PSPInput.h"
 
-#define printf pspDebugScreenPrintf // Remove later
-
 static PSPInput thisFrameInput;
 static PSPInput previousFrameInput;
 

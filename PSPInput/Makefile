@@ -1,5 +1,5 @@
 TARGET = PSPInputTest
-OBJS = main.o PSPInput.o ../common/callback.o
+OBJS = PSPInputTest.o PSPInput.o ../common/callback.o
 
 INCDIR =
 CFLAGS = -G0 -O2 -Wall
