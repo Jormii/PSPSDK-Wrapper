@@ -19,6 +19,7 @@ int main()
     printf("[ DEBUG ]\n\n");
 
     initInput(ANALOG_SAMPLING);
+    updateInput();
     if (discIsPresent())
     {
         printf("DISC_IS_PRESSENT\n");
