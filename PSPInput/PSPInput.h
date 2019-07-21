@@ -20,5 +20,7 @@ int buttonIsHeldDown(PSPButton button);
 int settingButtonIsPressed(PSPSettingButton settingButton);
 int settingButtonIsHeldDown(PSPSettingButton settingButton);
 void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr);
+int memoryStickIsConnected();
+int discIsPresent();
 
 #endif

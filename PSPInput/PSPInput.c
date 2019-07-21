@@ -65,3 +65,13 @@ void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr)
     analogStickDataPtr->xAxis = previousFrameInput.analogStickData.xAxis;
     analogStickDataPtr->yAxis = previousFrameInput.analogStickData.yAxis;
 }
+
+int memoryStickIsConnected()
+{
+    return thisFrameInput.settingButtonsData.settingButtonsPressed & MEMORY_STICK_PRESENT;
+}
+
+int discIsPresent()
+{
+    return thisFrameInput.settingButtonsData.settingButtonsPressed & DISC_PRESENT;
+}
