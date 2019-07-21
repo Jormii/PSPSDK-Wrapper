@@ -60,8 +60,8 @@ int settingButtonIsHeldDown(PSPSettingButton settingButton)
 
 void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr)
 {
-    analogStickDataPtr->xAxis = previousFrameInput.analogStickData.xAxis;
-    analogStickDataPtr->yAxis = previousFrameInput.analogStickData.yAxis;
+    analogStickDataPtr->xAxis = thisFrameInput.analogStickData.xAxis;
+    analogStickDataPtr->yAxis = thisFrameInput.analogStickData.yAxis;
 }
 
 int memoryStickIsConnected()
