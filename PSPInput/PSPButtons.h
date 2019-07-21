@@ -1,0 +1,27 @@
+#ifndef PSP_BUTTONS_H
+#define PSP_BUTTONS_H
+
+#include <pspctrl.h>
+
+typedef enum PSPButton
+{
+    START_BUTTON = PSP_CTRL_START,
+    SELECT_BUTTON = PSP_CTRL_SELECT,
+    UP_BUTTON = PSP_CTRL_UP,
+    RIGHT_BUTTON = PSP_CTRL_RIGHT,
+    DOWN_BUTTON = PSP_CTRL_DOWN,
+    LEFT_BUTTON = PSP_CTRL_LEFT,
+    TRIANGLE_BUTTON = PSP_CTRL_TRIANGLE,
+    CIRCLE_BUTTON = PSP_CTRL_CIRCLE,
+    CROSS_BUTTON = PSP_CTRL_CROSS,
+    SQUARE_BUTTON = PSP_CTRL_SQUARE,
+    L_TRIGGER = PSP_CTRL_LTRIGGER,
+    R_TRIGGER = PSP_CTRL_RTRIGGER
+} PSPButton;
+
+typedef struct PSPButtonsData
+{
+    unsigned int buttonsPressed;
+} PSPButtonsData;
+
+#endif

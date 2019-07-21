@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "callback.h": "c",
+        "buttoninput.h": "c",
+        "pspinit.h": "c",
+        "stdlib.h": "c"
+    }
+}
