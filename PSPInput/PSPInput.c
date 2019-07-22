@@ -34,28 +34,23 @@ void updateInput()
     thisFrameInput.settingButtonsData.settingButtonsPressed = input.Buttons;
 }
 
-int buttonIsPressed(PSPButton button)
+int getButton(PSPButton button)
 {
-    return previousFrameInput.buttonsData.buttonsPressed & button &&
-           !buttonIsHeldDown(button);
+    return getButtonDown(button) ||
+           (previousFrameInput.buttonsData.buttonsPressed & button &&
+            thisFrameInput.buttonsData.buttonsPressed & button);
 }
 
-int buttonIsHeldDown(PSPButton button)
+int getButtonDown(PSPButton button)
 {
-    return previousFrameInput.buttonsData.buttonsPressed & button &&
+    return !(previousFrameInput.buttonsData.buttonsPressed & button) &&
            thisFrameInput.buttonsData.buttonsPressed & button;
 }
 
-int settingButtonIsPressed(PSPSettingButton settingButton)
+int getButtonUp(PSPButton button)
 {
-    return previousFrameInput.settingButtonsData.settingButtonsPressed & settingButton &&
-           !settingButtonIsHeldDown(settingButton);
-}
-
-int settingButtonIsHeldDown(PSPSettingButton settingButton)
-{
-    return previousFrameInput.settingButtonsData.settingButtonsPressed & settingButton &&
-           thisFrameInput.settingButtonsData.settingButtonsPressed & settingButton;
+    return previousFrameInput.buttonsData.buttonsPressed & button &&
+           !(thisFrameInput.buttonsData.buttonsPressed & button);
 }
 
 void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr)
