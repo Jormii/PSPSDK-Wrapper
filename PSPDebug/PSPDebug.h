@@ -3,13 +3,21 @@
 
 #include <pspdebug.h>
 
+#define LINES_CAPACITY_VERTICAL 33
+#define CHAR_CAPACITY_HORIZONTAL 69
+
+#define DEFAULT_LEFT_MARGIN 1
+#define DEFAULT_RIGHT_MARGIN CHAR_CAPACITY_HORIZONTAL - 1
+#define DEFAULT_TOP_MARGIN 1
+#define DEFAULT_BOTTOM_MARGIN LINES_CAPACITY_VERTICAL - 1
+
 typedef enum PSPDebugBackground
 {
     DISABLED_BACKGROUND_COLOR,
     ENABLED_BACKGROUND_COLOR
 } PSPDebugBackground;
 
-typedef struct PSPDebugData
+typedef struct PSPDebugConfig
 {
     int leftMargin;
     int rightMargin;
@@ -20,15 +28,18 @@ typedef struct PSPDebugData
 
     int enabledBackgroundColor;
     u32 backgroundColor;
-} PSPDebugData;
+} PSPDebugConfig;
 
 void initDebug(PSPDebugBackground enableBackground);
 void print(const char *string);
 void clearScreen();
 void setTextColor(u8 R, u8 G, u8 B);
 void setBackgroundColor(u8 R, u8 G, u8 B);
+
 int getCursorXPosition();
+void setCursorXPosition(int x);
 int getCursorYPosition();
+void setCursorYPosition(int y);
 void setCursorPosition(int x, int y);
 int getLeftMargin();
 void setLeftMargin(int x);

@@ -5,6 +5,8 @@
 #include "./PSPAnalogStick.h"
 #include "./PSPSettingButtons.h"
 
+#define DEFAULT_SAMPLING_CYCLE 0
+
 typedef struct PSPInput
 {
     unsigned int timeStamp;

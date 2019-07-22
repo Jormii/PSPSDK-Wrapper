@@ -3,21 +3,22 @@
 
 #define RGB(R, G, B) (R << 24) + (G << 16) + (B << 8) + 255;
 
-static PSPDebugData debugData;
+static PSPDebugConfig debugConfig;
 
 void initDebug(PSPDebugBackground enableBackground)
 {
     pspDebugScreenInit();
+    pspDebugScreenClearLineDisable();
     pspDebugScreenEnableBackColor(enableBackground);
 
-    debugData.leftMargin = 0;
-    debugData.rightMargin = 10;
-    debugData.topMargin = 0;
-    debugData.bottomMargin = 10;
-    debugData.cursorXPosition = 0;
-    debugData.cursorYPosition = 0;
-    debugData.enabledBackgroundColor = enableBackground;
-    debugData.backgroundColor = RGB(0, 0, 0);
+    debugConfig.leftMargin = DEFAULT_LEFT_MARGIN;
+    debugConfig.rightMargin = DEFAULT_RIGHT_MARGIN;
+    debugConfig.topMargin = DEFAULT_TOP_MARGIN;
+    debugConfig.bottomMargin = DEFAULT_BOTTOM_MARGIN;
+    debugConfig.cursorXPosition = DEFAULT_LEFT_MARGIN;
+    debugConfig.cursorYPosition = DEFAULT_TOP_MARGIN;
+    debugConfig.enabledBackgroundColor = enableBackground;
+    debugConfig.backgroundColor = RGB(0, 0, 0);
 }
 
 void print(const char *string)
@@ -28,15 +29,15 @@ void print(const char *string)
     {
         if (string[c] == 32)
         {
-            if ((debugData.cursorXPosition + wordLength) > debugData.rightMargin)
+            if ((debugConfig.cursorXPosition + wordLength) > debugConfig.rightMargin)
             {
                 pspDebugScreenPuts("\n");
                 pspDebugScreenPrintData(string - c, wordLength);
                 ++c;
                 wordLength = 0;
 
-                debugData.cursorXPosition = pspDebugScreenGetX();
-                debugData.cursorYPosition = pspDebugScreenGetY();
+                debugConfig.cursorXPosition = pspDebugScreenGetX();
+                debugConfig.cursorYPosition = pspDebugScreenGetY();
             }
         }
         else
@@ -48,69 +49,126 @@ void print(const char *string)
 
 void clearScreen()
 {
+    pspDebugScreenClear();
 }
 
 void setTextColor(u8 R, u8 G, u8 B)
 {
+    u32 color = RGB(R, G, B);
+    pspDebugScreenSetTextColor(color);
 }
 
 void setBackgroundColor(u8 R, u8 G, u8 B)
 {
+    u32 color = RGB(R, G, B);
+    pspDebugScreenSetBackColor(color);
+    pspDebugScreenClear();
 }
 
 int getCursorXPosition()
 {
-    debugData.cursorXPosition;
+    debugConfig.cursorXPosition;
+}
+
+void setCursorXPosition(int x)
+{
+    if (x < debugConfig.leftMargin)
+    {
+        debugConfig.cursorXPosition = debugConfig.leftMargin;
+    }
+    else if (x > debugConfig.rightMargin)
+    {
+        debugConfig.cursorXPosition = debugConfig.rightMargin;
+    }
+    else
+    {
+        debugConfig.cursorXPosition = x;
+    }
+
+    pspDebugScreenSetXY(debugConfig.cursorXPosition, debugConfig.cursorYPosition);
 }
 
 int getCursorYPosition()
 {
-    debugData.cursorYPosition;
+    debugConfig.cursorYPosition;
+}
+
+void setCursorYPosition(int y)
+{
+    if (y < debugConfig.topMargin)
+    {
+        debugConfig.cursorYPosition = debugConfig.topMargin;
+    }
+    else if (y > debugConfig.bottomMargin)
+    {
+        debugConfig.cursorYPosition = debugConfig.bottomMargin;
+    }
+    else
+    {
+        debugConfig.cursorYPosition = y;
+    }
+
+    pspDebugScreenSetXY(debugConfig.cursorXPosition, debugConfig.cursorYPosition);
 }
 
 void setCursorPosition(int x, int y)
 {
-    debugData.cursorXPosition = x;
-    debugData.cursorYPosition = y;
-    pspDebugScreenSetXY(x, y);
+    setCursorXPosition(x);
+    setCursorYPosition(y);
 }
 
 int getLeftMargin()
 {
-    return debugData.leftMargin;
+    return debugConfig.leftMargin;
 }
 
 void setLeftMargin(int x)
 {
-    debugData.leftMargin = x;
+    if (x < DEFAULT_LEFT_MARGIN || x >= debugConfig.rightMargin)
+    {
+        return;
+    }
+    debugConfig.leftMargin = x;
 }
 
 int getRightMargin()
 {
-    return debugData.rightMargin;
+    return debugConfig.rightMargin;
 }
 
 void setRightMargin(int x)
 {
-    debugData.rightMargin = x;
+    if (x <= debugConfig.leftMargin || x > DEFAULT_RIGHT_MARGIN)
+    {
+        return;
+    }
+    debugConfig.rightMargin = x;
 }
 
 int getTopMargin()
 {
-    return debugData.topMargin;
+    return debugConfig.topMargin;
 }
 
 void setTopMargin(int y)
 {
-    debugData.topMargin = y;
+    if (y < DEFAULT_TOP_MARGIN || y >= debugConfig.bottomMargin)
+    {
+        return;
+    }
+    debugConfig.topMargin = y;
 }
 
 int getBottomMargin()
 {
-    return debugData.bottomMargin;
+    return debugConfig.bottomMargin;
 }
 
 void setBottomMargin(int y)
 {
-    debugData.bottomMargin = y;
+    if (y <= debugConfig.topMargin || y > DEFAULT_BOTTOM_MARGIN)
+    {
+        return;
+    }
+    debugConfig.bottomMargin = y;
 }

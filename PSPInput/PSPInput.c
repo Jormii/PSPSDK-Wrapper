@@ -17,7 +17,7 @@ static void swapInputs()
 
 void initInput(PSPAnalogStickSamplingMode samplingMode)
 {
-    sceCtrlSetSamplingCycle(0);
+    sceCtrlSetSamplingCycle(DEFAULT_SAMPLING_CYCLE);
     sceCtrlSetSamplingMode(samplingMode);
 }
 

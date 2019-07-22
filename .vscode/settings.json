@@ -3,6 +3,8 @@
         "callback.h": "c",
         "buttoninput.h": "c",
         "pspinit.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "pspdisplay.h": "c",
+        "pspdebug.h": "c"
     }
 }
