@@ -61,6 +61,7 @@ void setTextColor(u8 R, u8 G, u8 B)
 void setBackgroundColor(u8 R, u8 G, u8 B)
 {
     u32 color = RGB(R, G, B);
+    debugConfig.backgroundColor = color;
     pspDebugScreenSetBackColor(color);
     pspDebugScreenClear();
 }
