@@ -20,21 +20,6 @@ int size();
 int insert(const char *string);
 int poll();
 
-int isEmpty()
-{
-    return paragraphCount == 0;
-}
-
-int isFull()
-{
-    return paragraphCount == MAX;
-}
-
-int size()
-{
-    return paragraphCount;
-}
-
 int insert(const char *string)
 {
 
