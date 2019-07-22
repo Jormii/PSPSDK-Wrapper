@@ -18,10 +18,12 @@ int main(void)
     pspDebugScreenInit();
     setupExitCallback();
 
+    char characters[10] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
     char c;
     for (c = '0'; c <= '{'; ++c)
     {
-        printf("%c", c);
+        printf("%c", characters[c % 10]);
     }
 
     while (isRunning())
