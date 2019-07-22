@@ -7,8 +7,6 @@
 
 #include "../common/callback.h"
 
-#define printf pspDebugScreenPrintf
-
 #define VERS 1
 #define REVS 1
 
