@@ -1,53 +1,30 @@
 #ifndef PSP_DEBUG_H
 #define PSP_DEBUG_H
 
-#include <pspdebug.h>
-
-#define LINES_CAPACITY_VERTICAL 33
-#define CHAR_CAPACITY_HORIZONTAL 69
-
-#define DEFAULT_LEFT_MARGIN 1
-#define DEFAULT_RIGHT_MARGIN CHAR_CAPACITY_HORIZONTAL - 1
-#define DEFAULT_TOP_MARGIN 1
-#define DEFAULT_BOTTOM_MARGIN LINES_CAPACITY_VERTICAL - 1
-
 typedef enum PSPDebugBackground
 {
     DISABLED_BACKGROUND_COLOR,
     ENABLED_BACKGROUND_COLOR
 } PSPDebugBackground;
 
-typedef struct PSPDebugConfig
-{
-    int leftMargin;
-    int rightMargin;
-    int topMargin;
-    int bottomMargin;
-    int cursorXPosition;
-    int cursorYPosition;
+void init_debug(PSPDebugBackground enable_background);
+void debug_print(const char *string);
+void clear_screen();
+void set_text_color(unsigned char r, unsigned char g, unsigned char b);
+void set_background_color(unsigned char r, unsigned char g, unsigned char b);
 
-    int enabledBackgroundColor;
-    u32 backgroundColor;
-} PSPDebugConfig;
-
-void initDebug(PSPDebugBackground enableBackground);
-void debugPrint(const char *string);
-void clearScreen();
-void setTextColor(u8 R, u8 G, u8 B);
-void setBackgroundColor(u8 R, u8 G, u8 B);
-
-int getCursorXPosition();
-void setCursorXPosition(int x);
-int getCursorYPosition();
-void setCursorYPosition(int y);
-void setCursorPosition(int x, int y);
-int getLeftMargin();
-void setLeftMargin(int x);
-int getRightMargin();
-void setRightMargin(int x);
-int getTopMargin();
-void setTopMargin(int y);
-int getBottomMargin();
-void setBottomMargin(int y);
+int get_cursor_x_position();
+void set_cursor_x_position(int new_cursor_x_position);
+int get_cursor_y_position();
+void set_cursor_y_position(int new_cursor_y_position);
+void set_cursor_position(int new_cursor_x_position, int new_cursor_y_position);
+int get_left_margin();
+void set_left_margin(int new_left_margin);
+int get_right_margin();
+void set_right_margin(int new_right_margin);
+int get_top_margin();
+void set_top_margin(int new_top_margin);
+int get_bottom_margin();
+void set_bottom_margin(int new_bottom_margin);
 
 #endif

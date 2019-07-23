@@ -1,205 +1,233 @@
+#include <stdlib.h>
 #include <string.h>
+#include <pspdebug.h>
 #include "./PSPDebug.h"
-#include "./PSPDebugText.h"
+
+#define LINES_CAPACITY_VERTICAL 33
+#define CHAR_CAPACITY_HORIZONTAL 69
+
+#define DEFAULT_LEFT_MARGIN 1
+#define DEFAULT_RIGHT_MARGIN CHAR_CAPACITY_HORIZONTAL - 1
+#define DEFAULT_TOP_MARGIN 1
+#define DEFAULT_BOTTOM_MARGIN LINES_CAPACITY_VERTICAL - 1
 
 #define RGB(R, G, B) (R << 24) + (G << 16) + (B << 8) + 0;
 
-static PSPDebugConfig debugConfig;
-
-static void spaceCharacterFound(const char *word, size_t wordLength);
-static void newLineCharacterFound(const char *word, size_t wordLength);
-static void nullCharacterFound(const char *word, size_t wordLength);
-
-static void spaceCharacterFound(const char *word, size_t wordLength)
+typedef struct PSPDebugConfig
 {
-    int newXCursorPosition = debugConfig.cursorXPosition + wordLength + 1;
-    if (newXCursorPosition > debugConfig.rightMargin)
+    int left_margin;
+    int right_margin;
+    int top_margin;
+    int bottom_margin;
+    int cursor_x_position;
+    int cursor_y_position;
+
+    int enabled_background_color;
+    unsigned int background_color;
+} PSPDebugConfig;
+
+static PSPDebugConfig debug_config;
+
+static void special_character_found(const char *word, size_t word_length, char character_found);
+
+static void special_character_found(const char *word, size_t word_length, char character_found)
+{
+    if (word_length == 0 && character_found == '\0')
     {
-        setCursorPosition(debugConfig.leftMargin, debugConfig.cursorYPosition + 1);
-        newXCursorPosition = debugConfig.leftMargin + wordLength + 1;
+        return;
     }
-    pspDebugScreenPrintData(word, wordLength);
-    pspDebugScreenPrintData(" ", 1);
-    setCursorXPosition(newXCursorPosition);
+
+    int new_x_cursor_position = debug_config.cursor_x_position + word_length + 1;
+
+    if (new_x_cursor_position > debug_config.right_margin)
+    {
+        set_cursor_position(debug_config.left_margin, debug_config.cursor_y_position + 1);
+        new_x_cursor_position = debug_config.left_margin + word_length + 1;
+    }
+
+    if (debug_config.cursor_y_position == debug_config.bottom_margin)
+    {
+        set_cursor_y_position(debug_config.top_margin);
+    }
+
+    pspDebugScreenPrintData(word, word_length);
+    set_cursor_x_position(new_x_cursor_position);
+
+    switch (character_found)
+    {
+    case '\0':
+        break;
+    case ' ':
+        pspDebugScreenPrintData(" ", 1);
+        set_cursor_x_position(new_x_cursor_position);
+        break;
+    case '\n':
+        pspDebugScreenPrintf("\n");
+        set_cursor_position(debug_config.left_margin, debug_config.cursor_y_position + 1);
+        break;
+    default:
+        break;
+    }
 }
 
-static void newLineCharacterFound(const char *word, size_t wordLength)
-{
-}
-
-static void nullCharacterFound(const char *word, size_t wordLength)
-{
-    spaceCharacterFound(word, wordLength);
-}
-
-void initDebug(PSPDebugBackground enableBackground)
+void init_debug(PSPDebugBackground enable_background)
 {
     pspDebugScreenInit();
-    pspDebugScreenClearLineDisable();
-    pspDebugScreenEnableBackColor(enableBackground);
+    pspDebugScreenEnableBackColor(enable_background);
 
-    debugConfig.enabledBackgroundColor = enableBackground;
-    setBackgroundColor(0, 0, 0);
+    debug_config.enabled_background_color = enable_background;
+    set_background_color(0, 0, 0);
 
-    debugConfig.leftMargin = DEFAULT_LEFT_MARGIN;
-    debugConfig.rightMargin = DEFAULT_RIGHT_MARGIN;
-    debugConfig.topMargin = DEFAULT_TOP_MARGIN;
-    debugConfig.bottomMargin = DEFAULT_BOTTOM_MARGIN;
-    setCursorPosition(DEFAULT_LEFT_MARGIN, DEFAULT_TOP_MARGIN);
+    debug_config.left_margin = DEFAULT_LEFT_MARGIN;
+    debug_config.right_margin = DEFAULT_RIGHT_MARGIN;
+    debug_config.top_margin = DEFAULT_TOP_MARGIN;
+    debug_config.bottom_margin = DEFAULT_BOTTOM_MARGIN;
+    set_cursor_position(DEFAULT_LEFT_MARGIN, DEFAULT_TOP_MARGIN);
 }
 
-void debugPrint(const char *string)
+void debug_print(const char *string)
 {
-    int wordLength = 0;
-    size_t stringLength = strlen(string) + 1;
+    int word_length = 0;
+    size_t string_length = strlen(string) + 1;
     size_t c;
-    for (c = 0; c < stringLength; ++c)
+    for (c = 0; c < string_length; ++c)
     {
-        if (string[c] == ' ')
+        if (string[c] == ' ' || string[c] == '\n' || string[c] == '\0')
         {
-            spaceCharacterFound(string + c - wordLength, wordLength);
-            wordLength = 0;
-        }
-        else if (string[c] == '\n')
-        {
-            newLineCharacterFound(string + c - wordLength, wordLength);
-            wordLength = 0;
-        }
-        else if (string[c] == '\0')
-        {
-            nullCharacterFound(string + c - wordLength, wordLength);
-            wordLength = 0;
+            special_character_found(string + c - word_length, word_length, string[c]);
+            word_length = 0;
         }
         else
         {
-            ++wordLength;
+            ++word_length;
         }
     }
 }
 
-void clearScreen()
+void clear_screen()
 {
     pspDebugScreenClear();
+    set_cursor_position(debug_config.left_margin, debug_config.top_margin);
 }
 
-void setTextColor(u8 R, u8 G, u8 B)
+void set_text_color(unsigned char r, unsigned char g, unsigned char b)
 {
-    u32 color = RGB(R, G, B);
+    unsigned int color = RGB(r, g, b);
     pspDebugScreenSetTextColor(color);
 }
 
-void setBackgroundColor(u8 R, u8 G, u8 B)
+void set_background_color(unsigned char r, unsigned char g, unsigned char b)
 {
-    u32 color = RGB(R, G, B);
-    debugConfig.backgroundColor = color;
+    unsigned int color = RGB(r, g, b);
+    debug_config.background_color = color;
     pspDebugScreenSetBackColor(color);
     pspDebugScreenClear();
 }
 
-int getCursorXPosition()
+int get_cursor_x_position()
 {
-    return debugConfig.cursorXPosition;
+    return debug_config.cursor_x_position;
 }
 
-void setCursorXPosition(int x)
+void set_cursor_x_position(int new_left_margin)
 {
-    if (x < debugConfig.leftMargin)
+    if (new_left_margin < debug_config.left_margin)
     {
-        debugConfig.cursorXPosition = debugConfig.leftMargin;
+        debug_config.cursor_x_position = debug_config.left_margin;
     }
-    else if (x > debugConfig.rightMargin)
+    else if (new_left_margin > debug_config.right_margin)
     {
-        debugConfig.cursorXPosition = debugConfig.rightMargin;
-    }
-    else
-    {
-        debugConfig.cursorXPosition = x;
-    }
-
-    pspDebugScreenSetXY(debugConfig.cursorXPosition, debugConfig.cursorYPosition);
-}
-
-int getCursorYPosition()
-{
-    return debugConfig.cursorYPosition;
-}
-
-void setCursorYPosition(int y)
-{
-    if (y < debugConfig.topMargin)
-    {
-        debugConfig.cursorYPosition = debugConfig.topMargin;
-    }
-    else if (y > debugConfig.bottomMargin)
-    {
-        debugConfig.cursorYPosition = debugConfig.bottomMargin;
+        debug_config.cursor_x_position = debug_config.right_margin;
     }
     else
     {
-        debugConfig.cursorYPosition = y;
+        debug_config.cursor_x_position = new_left_margin;
     }
 
-    pspDebugScreenSetXY(debugConfig.cursorXPosition, debugConfig.cursorYPosition);
+    pspDebugScreenSetXY(debug_config.cursor_x_position, debug_config.cursor_y_position);
 }
 
-void setCursorPosition(int x, int y)
+int get_cursor_y_position()
 {
-    setCursorXPosition(x);
-    setCursorYPosition(y);
+    return debug_config.cursor_y_position;
 }
 
-int getLeftMargin()
+void set_cursor_y_position(int new_cursor_y_position)
 {
-    return debugConfig.leftMargin;
+    if (new_cursor_y_position < debug_config.top_margin)
+    {
+        debug_config.cursor_y_position = debug_config.top_margin;
+    }
+    else if (new_cursor_y_position > debug_config.bottom_margin)
+    {
+        debug_config.cursor_y_position = debug_config.bottom_margin;
+    }
+    else
+    {
+        debug_config.cursor_y_position = new_cursor_y_position;
+    }
+
+    pspDebugScreenSetXY(debug_config.cursor_x_position, debug_config.cursor_y_position);
 }
 
-void setLeftMargin(int x)
+void set_cursor_position(int new_cursor_x_position, int new_cursor_y_position)
 {
-    if (x < DEFAULT_LEFT_MARGIN || x >= debugConfig.rightMargin)
+    set_cursor_x_position(new_cursor_x_position);
+    set_cursor_y_position(new_cursor_y_position);
+}
+
+int get_left_margin()
+{
+    return debug_config.left_margin;
+}
+
+void set_left_margin(int new_left_margin)
+{
+    if (new_left_margin < DEFAULT_LEFT_MARGIN || new_left_margin >= debug_config.right_margin)
     {
         return;
     }
-    debugConfig.leftMargin = x;
+    debug_config.left_margin = new_left_margin;
 }
 
-int getRightMargin()
+int get_right_margin()
 {
-    return debugConfig.rightMargin;
+    return debug_config.right_margin;
 }
 
-void setRightMargin(int x)
+void set_right_margin(int new_right_margin)
 {
-    if (x <= debugConfig.leftMargin || x > DEFAULT_RIGHT_MARGIN)
+    if (new_right_margin <= debug_config.left_margin || new_right_margin > DEFAULT_RIGHT_MARGIN)
     {
         return;
     }
-    debugConfig.rightMargin = x;
+    debug_config.right_margin = new_right_margin;
 }
 
-int getTopMargin()
+int get_top_margin()
 {
-    return debugConfig.topMargin;
+    return debug_config.top_margin;
 }
 
-void setTopMargin(int y)
+void set_top_margin(int new_top_margin)
 {
-    if (y < DEFAULT_TOP_MARGIN || y >= debugConfig.bottomMargin)
+    if (new_top_margin < DEFAULT_TOP_MARGIN || new_top_margin >= debug_config.bottom_margin)
     {
         return;
     }
-    debugConfig.topMargin = y;
+    debug_config.top_margin = new_top_margin;
 }
 
-int getBottomMargin()
+int get_bottom_margin()
 {
-    return debugConfig.bottomMargin;
+    return debug_config.bottom_margin;
 }
 
-void setBottomMargin(int y)
+void set_bottom_margin(int new_bottom_margin)
 {
-    if (y <= debugConfig.topMargin || y > DEFAULT_BOTTOM_MARGIN)
+    if (new_bottom_margin <= debug_config.top_margin || new_bottom_margin > DEFAULT_BOTTOM_MARGIN)
     {
         return;
     }
-    debugConfig.bottomMargin = y;
+    debug_config.bottom_margin = new_bottom_margin;
 }

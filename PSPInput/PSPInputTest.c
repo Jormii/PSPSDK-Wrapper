@@ -19,29 +19,28 @@ int main()
     pspDebugScreenSetXY(1, 1);
     printf("[ DEBUG ]\n\n");
 
-    initInput(ANALOG_SAMPLING);
-    updateInput();
-    if (discIsPresent())
+    init_input(ANALOG_SAMPLING);
+    if (disc_is_present())
     {
         printf("DISC_IS_PRESSENT\n");
     }
-    if (memoryStickIsConnected())
+    if (memory_stick_is_connected())
     {
         printf("MEMORY_STICK_CONNECTED\n");
     }
     while (isRunning())
     {
-        updateInput();
+        update_input();
 
-        if (getButton(CROSS_BUTTON))
-        {
-            printf("CROSS BUTTON IS DOWN\n");
-        }
-        if (getButtonDown(CROSS_BUTTON))
+        if (get_button_down(CROSS_BUTTON))
         {
             printf("CROSS BUTTON PRESSED\n");
         }
-        if (getButtonUp(CROSS_BUTTON))
+        if (get_button(CROSS_BUTTON))
+        {
+            printf("CROSS BUTTON IS DOWN\n");
+        }
+        if (get_button_up(CROSS_BUTTON))
         {
             printf("CROSS BUTTON RELEASED\n");
         }

@@ -1,12 +1,12 @@
 TARGET = PSPDebugTest
-OBJS   = ./PSPDebugTest.o ./PSPDebug.o ../common/callback.o
+OBJS   = ./PSPDebugTest.o ./PSPDebug.o ../PSPInput/PSPInput.o ../common/callback.o
 
 INCDIR   =
 CFLAGS   = -G0 -Wall -O2
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS  = $(CFLAGS)
 
-LIBDIR  =
+LIBDIR  = ./
 LDFLAGS =
 LIBS    = -lm
 

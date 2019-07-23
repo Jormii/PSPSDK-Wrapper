@@ -1,70 +1,80 @@
-#include <stdlib.h>
+#include <pspctrl.h>
 #include "./PSPInput.h"
 
-static PSPInput thisFrameInput;
-static PSPInput previousFrameInput;
+#define DEFAULT_SAMPLING_CYCLE 0
 
-static void swapInputs();
-
-static void swapInputs()
+typedef struct PSPInput
 {
-    previousFrameInput.timeStamp = thisFrameInput.timeStamp;
-    previousFrameInput.buttonsData.buttonsPressed = thisFrameInput.buttonsData.buttonsPressed;
-    previousFrameInput.analogStickData.xAxis = thisFrameInput.analogStickData.xAxis;
-    previousFrameInput.analogStickData.yAxis = thisFrameInput.analogStickData.yAxis;
-    previousFrameInput.settingButtonsData.settingButtonsPressed = thisFrameInput.settingButtonsData.settingButtonsPressed;
+    unsigned int time_stamp;
+    PSPButtonsData buttons_data;
+    PSPAnalogStickData analog_stick_data;
+    PSPSettingButtonsData setting_buttons_data;
+} PSPInput;
+
+static PSPInput this_frame_input;
+static PSPInput previous_frame_input;
+
+static void swap_inputs();
+
+static void swap_inputs()
+{
+    previous_frame_input.time_stamp = this_frame_input.time_stamp;
+    previous_frame_input.buttons_data.buttons_pressed = this_frame_input.buttons_data.buttons_pressed;
+    previous_frame_input.analog_stick_data.x_axis = this_frame_input.analog_stick_data.x_axis;
+    previous_frame_input.analog_stick_data.y_axis = this_frame_input.analog_stick_data.y_axis;
+    previous_frame_input.setting_buttons_data.setting_buttons_pressed = this_frame_input.setting_buttons_data.setting_buttons_pressed;
 }
 
-void initInput(PSPAnalogStickSamplingMode samplingMode)
+void init_input(PSPAnalogStickSamplingMode sampling_mode)
 {
     sceCtrlSetSamplingCycle(DEFAULT_SAMPLING_CYCLE);
-    sceCtrlSetSamplingMode(samplingMode);
+    sceCtrlSetSamplingMode(sampling_mode);
 }
 
-void updateInput()
+void update_input()
 {
     SceCtrlData input;
     sceCtrlPeekBufferPositive(&input, 1);
 
-    swapInputs();
-    thisFrameInput.timeStamp = input.TimeStamp;
-    thisFrameInput.buttonsData.buttonsPressed = input.Buttons;
-    thisFrameInput.analogStickData.xAxis = input.Lx;
-    thisFrameInput.analogStickData.yAxis = input.Ly;
-    thisFrameInput.settingButtonsData.settingButtonsPressed = input.Buttons;
+    swap_inputs();
+    this_frame_input.time_stamp = input.TimeStamp;
+    this_frame_input.buttons_data.buttons_pressed = input.Buttons;
+    this_frame_input.analog_stick_data.x_axis = input.Lx;
+    this_frame_input.analog_stick_data.y_axis = input.Ly;
+    this_frame_input.setting_buttons_data.setting_buttons_pressed = input.Buttons;
 }
 
-int getButton(PSPButton button)
+int get_button(PSPButton button)
 {
-    return getButtonDown(button) ||
-           (previousFrameInput.buttonsData.buttonsPressed & button &&
-            thisFrameInput.buttonsData.buttonsPressed & button);
+    return get_button_down(button) ||
+           (previous_frame_input.buttons_data.buttons_pressed & button &&
+            this_frame_input.buttons_data.buttons_pressed & button);
 }
 
-int getButtonDown(PSPButton button)
+int get_button_down(PSPButton button)
 {
-    return !(previousFrameInput.buttonsData.buttonsPressed & button) &&
-           thisFrameInput.buttonsData.buttonsPressed & button;
+    return !(previous_frame_input.buttons_data.buttons_pressed & button) &&
+           this_frame_input.buttons_data.buttons_pressed & button;
 }
 
-int getButtonUp(PSPButton button)
+int get_button_up(PSPButton button)
 {
-    return previousFrameInput.buttonsData.buttonsPressed & button &&
-           !(thisFrameInput.buttonsData.buttonsPressed & button);
+    return previous_frame_input.buttons_data.buttons_pressed & button &&
+           !(this_frame_input.buttons_data.buttons_pressed & button);
 }
 
-void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr)
+void get_analog_stick_values(PSPAnalogStickData *analog_stick_data_ptr)
 {
-    analogStickDataPtr->xAxis = thisFrameInput.analogStickData.xAxis;
-    analogStickDataPtr->yAxis = thisFrameInput.analogStickData.yAxis;
+    analog_stick_data_ptr->x_axis = this_frame_input.analog_stick_data.x_axis;
+    analog_stick_data_ptr->y_axis = this_frame_input.analog_stick_data.y_axis;
 }
 
-int memoryStickIsConnected()
+int memory_stick_is_connected()
 {
-    return thisFrameInput.settingButtonsData.settingButtonsPressed & MEMORY_STICK_PRESENT;
+    return this_frame_input.setting_buttons_data.setting_buttons_pressed & MEMORY_STICK_PRESENT;
 }
 
-int discIsPresent()
+int disc_is_present()
 {
-    return thisFrameInput.settingButtonsData.settingButtonsPressed & DISC_PRESENT;
+    return this_frame_input.setting_buttons_data.setting_buttons_pressed & DISC_PRESENT;
 }
