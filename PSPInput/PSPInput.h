@@ -5,21 +5,13 @@
 #include "./PSPAnalogStick.h"
 #include "./PSPSettingButtons.h"
 
-typedef struct PSPInput
-{
-    unsigned int timeStamp;
-    PSPButtonsData buttonsData;
-    PSPAnalogStickData analogStickData;
-    PSPSettingButtonsData settingButtonsData;
-} PSPInput;
-
-void initInput(PSPAnalogStickSamplingMode samplingMode);
-void updateInput();
-int getButton(PSPButton button);
-int getButtonDown(PSPButton button);
-int getButtonUp(PSPButton button);
-void getAnalogStickValues(PSPAnalogStickData *analogStickDataPtr);
-int memoryStickIsConnected();
-int discIsPresent();
+void init_input(PSPAnalogStickSamplingMode sampling_mode);
+void update_input();
+int get_button(PSPButton button);
+int get_button_down(PSPButton button);
+int get_button_up(PSPButton button);
+void get_analog_stick_values(PSPAnalogStickData *analog_stick_data_ptr);
+int memory_stick_is_connected();
+int disc_is_present();
 
 #endif

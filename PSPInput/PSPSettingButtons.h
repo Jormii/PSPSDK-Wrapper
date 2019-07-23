@@ -1,25 +1,23 @@
 #ifndef PSP_SETTING_BUTTONS_H
 #define PSP_SETTING_BUTTONS_H
 
-#include <pspctrl.h>
-
-#define DISC_PRESENT PSP_CTRL_DISC;
-#define MEMORY_STICK_PRESENT PSP_CTRL_MS;
+#define DISC_PRESENT 0x1000000;
+#define MEMORY_STICK_PRESENT 0x2000000;
 
 typedef enum PSPSettingButton
 {
-    HOME_BUTTON = PSP_CTRL_HOME,
-    SCREEN_BUTTON = PSP_CTRL_SCREEN,
-    MUSIC_NOTE_BUTTON = PSP_CTRL_NOTE,
-    VOLUME_UP_BUTTON = PSP_CTRL_VOLUP,
-    VOLUME_DOWN_BUTTON = PSP_CTRL_VOLDOWN,
-    HOLD_SLIDER = PSP_CTRL_HOLD,
-    WLAN_SLIDER = PSP_CTRL_WLAN_UP,
+    HOME_BUTTON = 0x010000,
+    SCREEN_BUTTON = 0x400000,
+    MUSIC_NOTE_BUTTON = 0x800000,
+    VOLUME_UP_BUTTON = 0x100000,
+    VOLUME_DOWN_BUTTON = 0x200000,
+    HOLD_SLIDER = 0x020000,
+    WLAN_SLIDER = 0x040000,
 } PSPSettingButton;
 
 typedef struct PSPSettingButtonsData
 {
-    unsigned int settingButtonsPressed;
+    unsigned int setting_buttons_pressed;
 } PSPSettingButtonsData;
 
 #endif

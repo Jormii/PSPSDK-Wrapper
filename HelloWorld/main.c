@@ -16,12 +16,17 @@ PSP_HEAP_SIZE_MAX();
 int main(void)
 {
     pspDebugScreenInit();
+    pspDebugScreenClearLineDisable();
     setupExitCallback();
 
-    char c;
-    for (c = '0'; c <= '{'; ++c)
+    int i;
+    for (i = 0; i <= 45; ++i)
     {
-        printf("%c", c);
+        printf("%d\n", i);
+        if (i >= 32)
+        {
+            pspDebugScreenSetXY(0, 32);
+        }
     }
 
     while (isRunning())
