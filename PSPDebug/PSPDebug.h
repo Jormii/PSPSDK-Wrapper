@@ -31,7 +31,7 @@ typedef struct PSPDebugConfig
 } PSPDebugConfig;
 
 void initDebug(PSPDebugBackground enableBackground);
-void print(const char *string);
+void debugPrint(const char *string);
 void clearScreen();
 void setTextColor(u8 R, u8 G, u8 B);
 void setBackgroundColor(u8 R, u8 G, u8 B);

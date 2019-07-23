@@ -5,6 +5,7 @@
         "pspinit.h": "c",
         "stdlib.h": "c",
         "pspdisplay.h": "c",
-        "pspdebug.h": "c"
+        "pspdebug.h": "c",
+        "string": "cpp"
     }
 }

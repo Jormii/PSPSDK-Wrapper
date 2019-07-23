@@ -20,34 +20,4 @@ int size();
 int insert(const char *string);
 int poll();
 
-int insert(const char *string)
-{
-
-    if (!isFull())
-    {
-
-        if (rear == MAX - 1)
-        {
-            rear = -1;
-        }
-
-        intArray[++rear] = data;
-        paragraphCount
-++;
-    }
-}
-
-int removeData()
-{
-    int data = intArray[front++];
-
-    if (front == MAX)
-    {
-        front = 0;
-    }
-
-    paragraphCount--;
-    return data;
-}
-
 #endif
