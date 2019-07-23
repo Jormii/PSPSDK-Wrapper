@@ -2,6 +2,7 @@
 #include "./PSPInput.h"
 
 #define DEFAULT_SAMPLING_CYCLE 0
+#define DEFAULT_SAMPLING_MODE PSP_CTRL_MODE_ANALOG
 
 typedef struct PSPInput
 {
@@ -25,10 +26,10 @@ static void swap_inputs()
     previous_frame_input.setting_buttons_data.setting_buttons_pressed = this_frame_input.setting_buttons_data.setting_buttons_pressed;
 }
 
-void init_input(PSPAnalogStickSamplingMode sampling_mode)
+void init_input()
 {
     sceCtrlSetSamplingCycle(DEFAULT_SAMPLING_CYCLE);
-    sceCtrlSetSamplingMode(sampling_mode);
+    sceCtrlSetSamplingMode(DEFAULT_SAMPLING_MODE);
 }
 
 void update_input()

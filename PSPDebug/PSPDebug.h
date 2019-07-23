@@ -1,13 +1,7 @@
 #ifndef PSP_DEBUG_H
 #define PSP_DEBUG_H
 
-typedef enum PSPDebugBackground
-{
-    DISABLED_BACKGROUND_COLOR,
-    ENABLED_BACKGROUND_COLOR
-} PSPDebugBackground;
-
-void init_debug(PSPDebugBackground enable_background);
+void init_debug();
 void debug_print(const char *string);
 void clear_screen();
 void set_text_color(unsigned char r, unsigned char g, unsigned char b);

@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <string.h>
 #include <pspdebug.h>
 #include "./PSPDebug.h"
@@ -11,7 +10,7 @@
 #define DEFAULT_TOP_MARGIN 1
 #define DEFAULT_BOTTOM_MARGIN LINES_CAPACITY_VERTICAL - 1
 
-#define RGB(R, G, B) (R << 24) + (G << 16) + (B << 8) + 0;
+#define RGB(R, G, B) (R) + (G << 8) + (B << 16);
 
 typedef struct PSPDebugConfig
 {
@@ -22,7 +21,6 @@ typedef struct PSPDebugConfig
     int cursor_x_position;
     int cursor_y_position;
 
-    int enabled_background_color;
     unsigned int background_color;
 } PSPDebugConfig;
 
@@ -70,12 +68,10 @@ static void special_character_found(const char *word, size_t word_length, char c
     }
 }
 
-void init_debug(PSPDebugBackground enable_background)
+void init_debug()
 {
     pspDebugScreenInit();
-    pspDebugScreenEnableBackColor(enable_background);
 
-    debug_config.enabled_background_color = enable_background;
     set_background_color(0, 0, 0);
 
     debug_config.left_margin = DEFAULT_LEFT_MARGIN;
@@ -121,7 +117,7 @@ void set_background_color(unsigned char r, unsigned char g, unsigned char b)
     unsigned int color = RGB(r, g, b);
     debug_config.background_color = color;
     pspDebugScreenSetBackColor(color);
-    pspDebugScreenClear();
+    clear_screen();
 }
 
 int get_cursor_x_position()

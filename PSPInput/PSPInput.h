@@ -5,7 +5,7 @@
 #include "./PSPAnalogStick.h"
 #include "./PSPSettingButtons.h"
 
-void init_input(PSPAnalogStickSamplingMode sampling_mode);
+void init_input();
 void update_input();
 int get_button(PSPButton button);
 int get_button_down(PSPButton button);

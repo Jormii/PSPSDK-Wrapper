@@ -19,7 +19,7 @@ int main()
     pspDebugScreenSetXY(1, 1);
     printf("[ DEBUG ]\n\n");
 
-    init_input(ANALOG_SAMPLING);
+    init_input();
     if (disc_is_present())
     {
         printf("DISC_IS_PRESSENT\n");
