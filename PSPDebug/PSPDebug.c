@@ -38,13 +38,14 @@ void initDebug(PSPDebugBackground enableBackground)
     pspDebugScreenClearLineDisable();
     pspDebugScreenEnableBackColor(enableBackground);
 
+    debugConfig.enabledBackgroundColor = enableBackground;
+    setBackgroundColor(0, 0, 0);
+
     debugConfig.leftMargin = DEFAULT_LEFT_MARGIN;
     debugConfig.rightMargin = DEFAULT_RIGHT_MARGIN;
     debugConfig.topMargin = DEFAULT_TOP_MARGIN;
     debugConfig.bottomMargin = DEFAULT_BOTTOM_MARGIN;
     setCursorPosition(DEFAULT_LEFT_MARGIN, DEFAULT_TOP_MARGIN);
-    debugConfig.enabledBackgroundColor = enableBackground;
-    setBackgroundColor(0, 0, 0);
 }
 
 void debugPrint(const char *string)

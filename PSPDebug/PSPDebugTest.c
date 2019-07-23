@@ -21,7 +21,7 @@ int main(void)
 
     while (isRunning())
     {
-        sceDisplayWaitVblankStart();
+       // sceDisplayWaitVblankStart();
     }
 
     sceKernelExitGame();
