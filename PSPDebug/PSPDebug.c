@@ -45,7 +45,7 @@ static void special_character_found(const char *word, size_t word_length, char c
 
     if (debug_config.cursor_y_position == debug_config.bottom_margin)
     {
-        set_cursor_y_position(debug_config.top_margin);
+        clear_screen();
     }
 
     pspDebugScreenPrintData(word, word_length);
@@ -104,6 +104,7 @@ void clear_screen()
 {
     pspDebugScreenClear();
     set_cursor_position(debug_config.left_margin, debug_config.top_margin);
+    pspDebugScreenSetBackColor(debug_config.background_color);
 }
 
 void set_text_color(unsigned char r, unsigned char g, unsigned char b)

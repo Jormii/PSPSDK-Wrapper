@@ -51,6 +51,11 @@ int main(void)
             set_background_color(0, 0, 255);
             printDebugText();
         }
+
+        if (get_button_down(L_TRIGGER))
+        {
+            debug_print("HOLA\n");
+        }
     }
 
     sceKernelExitGame();
