@@ -27,6 +27,7 @@ int main(void)
     init_input();
     setupExitCallback();
 
+    printDebugText();
     while (isRunning())
     {
         update_input();
