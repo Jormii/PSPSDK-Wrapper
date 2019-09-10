@@ -1,5 +1,6 @@
 #include <pspkernel.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../common/callback.h"
 #include "../PSPDebug/PSPDebug.h"
@@ -19,12 +20,12 @@ int main()
     debug_print("AA\n");
 
     char *string = PSPMalloc(20);
-    strcpy(string, "AAA\n");
+    sprintf(string, "Puntero al string %p\n", string);
     debug_print(string);
-    debug_print("IT WORKS?!");
 
     while (isRunning())
     {
+        debug_print("It just works\n");
         update_input();
     }
 
