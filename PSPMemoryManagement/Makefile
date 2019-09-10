@@ -1,5 +1,5 @@
 TARGET = PSPMemoryManagement
-OBJS = ./PSPMemoryManagementTest.o ./PSPMemoryManagement.o ../PSPDebug/PSPDebug.o ../PSPInput/PSPInput.o ../common/callback.o
+OBJS = ./PSPMemoryManagementTest.o ./PSPMemoryManagement.o ../PSPDebug/PSPDebug.o ../common/callback.o
 
 INCDIR =
 CFLAGS = -G0 -O2 -Wall
