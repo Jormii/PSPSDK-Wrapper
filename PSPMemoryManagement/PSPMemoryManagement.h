@@ -1,0 +1,1 @@
+void *PSPMalloc(size_t size);

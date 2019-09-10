@@ -22,6 +22,7 @@ typedef struct PSPDebugConfig
     int cursor_y_position;
 
     unsigned int background_color;
+    int debug_initialized;
 } PSPDebugConfig;
 
 static PSPDebugConfig debug_config;
@@ -70,6 +71,12 @@ static void special_character_found(const char *word, size_t word_length, char c
 
 void init_debug()
 {
+    if (debug_config.debug_initialized)
+    {
+        return;
+    }
+    debug_config.debug_initialized = 1;
+
     pspDebugScreenInit();
 
     set_background_color(0, 0, 0);
