@@ -1,39 +1,34 @@
 #include "./PSPLinkedList.h"
+#include "../PSPMemoryManagement/PSPMemoryManagement.h"
 
-void initializeList(PSPListNode *listHead)
-{
-    listHead->next = NULL;
-    listHead->data = NULL;
-    listHead->dataSize = 0;
-}
-
-PSPListNode *listAddNode(PSPListNode *listHead, void *data, size_t dataSize, int position)
+void initialize_list(PSPListNode *list_head)
 {
 }
 
-PSPListNode *listAddNodeFront(PSPListNode *listHead, void *data, size_t dataSize)
-{
-    if (listHead->data == NULL) {
-        
-    }
-}
-
-PSPListNode *listAddNodeBack(PSPListNode *listHead, void *data, size_t dataSize)
+PSPListNode *list_add_node(PSPListNode *list_head, void *data, size_t data_size, int position)
 {
 }
 
-int listRemoveNode(PSPListNode *listHead, PSPListNode *nodeToRemove)
+PSPListNode *list_add_node_front(PSPListNode *list_head, void *data, size_t data_size)
 {
 }
 
-int listRemoveFront(PSPListNode *listHead)
+PSPListNode *list_add_node_back(PSPListNode *list_head, void *data, size_t data_size)
 {
 }
 
-int listRemoveBack(PSPListNode *listHead)
+int list_remove_node(PSPListNode *list_head, PSPListNode *node_to_remove)
 {
 }
 
-PSPListNode *listClear(PSPListNode *listHead)
+int list_remove_front(PSPListNode *list_head)
+{
+}
+
+int list_remove_back(PSPListNode *list_head)
+{
+}
+
+PSPListNode *list_clear(PSPListNode *list_head)
 {
 }
