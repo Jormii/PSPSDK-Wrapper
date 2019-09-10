@@ -6,6 +6,7 @@
         "stdlib.h": "c",
         "pspdisplay.h": "c",
         "pspdebug.h": "c",
-        "string": "cpp"
+        "string": "cpp",
+        "pspmemorymanagement.h": "c"
     }
 }

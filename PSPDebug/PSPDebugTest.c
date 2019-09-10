@@ -12,7 +12,7 @@ PSP_MODULE_INFO("PSPDebugTest", PSP_MODULE_USER, VERS, REVS);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_MAX();
 
-void printDebugText()
+void print_debug_text()
 {
     debug_print("[ DEBUG ]\n\n");
     debug_print("I'd just like to interject for a moment. What you're referring to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.\n\n");
@@ -27,29 +27,29 @@ int main(void)
     init_input();
     setupExitCallback();
 
-    printDebugText();
+    print_debug_text();
     while (isRunning())
     {
         update_input();
         if (get_button_down(TRIANGLE_BUTTON))
         {
             set_background_color(255, 255, 255);
-            printDebugText();
+            print_debug_text();
         }
         if (get_button_down(SQUARE_BUTTON))
         {
             set_background_color(255, 0, 0);
-            printDebugText();
+            print_debug_text();
         }
         if (get_button_down(CROSS_BUTTON))
         {
             set_background_color(0, 255, 0);
-            printDebugText();
+            print_debug_text();
         }
         if (get_button_down(CIRCLE_BUTTON))
         {
             set_background_color(0, 0, 255);
-            printDebugText();
+            print_debug_text();
         }
 
         if (get_button_down(L_TRIGGER))

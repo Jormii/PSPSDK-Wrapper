@@ -12,12 +12,12 @@ void *psp_calloc(size_t n_items, size_t item_size)
     return calloc(n_items, item_size);
 }
 
-void *psp_realloc(void *pointer, size_t size)
+void *psp_realloc(void *ptr, size_t size)
 {
-    return realloc(pointer, size);
+    return realloc(ptr, size);
 }
 
-void psp_free(void *pointer)
+void psp_free(void *ptr)
 {
-    free(pointer);
+    free(ptr);
 }
