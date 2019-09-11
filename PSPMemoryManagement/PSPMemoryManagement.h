@@ -1,7 +1,9 @@
 #ifndef PSP_MEMORY_MANAGEMENT_H
 #define PSP_MEMORY_MANAGEMENT_H
 
+#ifndef NULL
 #define NULL ((void *)0);
+#endif
 
 typedef unsigned int size_t;
 

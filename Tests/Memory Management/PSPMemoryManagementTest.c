@@ -2,11 +2,11 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "../common/callback.h"
-#include "../PSPDebug/PSPDebug.h"
-#include "./PSPMemoryManagement.h"
+#include "../../common/callback.h"
+#include "../../PSPDebug/PSPDebug.h"
+#include "../../PSPMemoryManagement/PSPMemoryManagement.h"
 
-PSP_MODULE_INFO("Memory Management", PSP_MODULE_USER, 1, 1);
+PSP_MODULE_INFO("PSPMemoryManagementTest", PSP_MODULE_USER, 1, 1);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_MAX();
 
@@ -28,6 +28,8 @@ int main()
     debug_print(aux_string);
     sprintf(aux_string, "Pointer to third string: %p\n", third_string);
     debug_print(aux_string);
+    sprintf(aux_string, "Pointer to helper string: %p\n", aux_string);
+    debug_print(aux_string);
 
     first_string = psp_realloc(first_string, 1024);
     debug_print("After realloc\n");
@@ -36,6 +38,8 @@ int main()
     sprintf(aux_string, "Pointer to second string: %p\n", second_string);
     debug_print(aux_string);
     sprintf(aux_string, "Pointer to third string: %p\n", third_string);
+    debug_print(aux_string);
+    sprintf(aux_string, "Pointer to helper string: %p\n", aux_string);
     debug_print(aux_string);
 
     psp_free(first_string);
@@ -48,6 +52,10 @@ int main()
     debug_print(aux_string);
     sprintf(aux_string, "Pointer to third string: %p\n", third_string);
     debug_print(aux_string);
+    sprintf(aux_string, "Pointer to helper string: %p\n", aux_string);
+    debug_print(aux_string);
+
+    psp_free(aux_string);
 
     while (isRunning())
     {
