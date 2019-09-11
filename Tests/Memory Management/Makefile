@@ -1,5 +1,5 @@
-TARGET = PSPMemoryManagement
-OBJS = ./PSPMemoryManagementTest.o ./PSPMemoryManagement.o ../PSPDebug/PSPDebug.o ../common/callback.o
+TARGET = PSPMemoryManagementTest
+OBJS = ./PSPMemoryManagementTest.o ../../PSPMemoryManagement/PSPMemoryManagement.o ../../PSPDebug/PSPDebug.o ../../common/callback.o
 
 INCDIR =
 CFLAGS = -G0 -O2 -Wall
@@ -13,7 +13,7 @@ LIBS = -lm
 BUILD_PRX = 1 
 
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = PSPMemoryManagement
+PSP_EBOOT_TITLE = PSPMemoryManagementTest
 # PSP_EBOOT_ICON= ICON0.png
 # PSP_EBOOT_PIC1= PIC1.png
 # PSP_EBOOT_SND0= SND0.at3

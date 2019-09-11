@@ -1,2 +1,2 @@
 - Implement a proper printf()
-- Redo HelloWorld
+- In case program crashes, dump stack trace to file

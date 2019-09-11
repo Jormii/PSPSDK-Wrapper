@@ -2,17 +2,18 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "../common/callback.h"
-#include "../PSPDebug/PSPDebug.h"
-#include "../PSPInput/PSPInput.h"
-#include "./PSPIO.h"
+#include "../../common/callback.h"
+#include "../../PSPDebug/PSPDebug.h"
+#include "../../PSPInput/PSPInput.h"
+#include "../../PSPIO/PSPIO.h"
 
-PSP_MODULE_INFO("IO", PSP_MODULE_USER, 1, 1);
+PSP_MODULE_INFO("PSPIOTest", PSP_MODULE_USER, 1, 1);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_MAX();
 
 const char *dir = "test_dir/";
 const char *file = "test_file.txt";
+const char *renamed_file = "renamed_file.txt";
 
 void create_and_write_file(const char *path)
 {
@@ -39,7 +40,6 @@ int main()
     PSP_change_working_directory("./test_dir/");
     create_and_write_file(file);
 
-    // Volver a raiz y borrar directorio y fichero renombrado
     PSP_change_working_directory("./..");
     PSP_remove_dir("./test_dir/");
     PSP_remove_file("./renamed_file.txt");
