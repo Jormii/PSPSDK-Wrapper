@@ -6,7 +6,7 @@
 #include "../PSPDebug/PSPDebug.h"
 #include "./PSPMemoryManagement.h"
 
-PSP_MODULE_INFO("Button Input", PSP_MODULE_USER, 1, 1);
+PSP_MODULE_INFO("Memory Management", PSP_MODULE_USER, 1, 1);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_MAX();
 
