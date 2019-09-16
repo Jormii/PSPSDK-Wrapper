@@ -1,6 +1,22 @@
 #include <pspiofilemgr.h>
+#include <pspstdio.h>
 
 #include "./PSPIO.h"
+
+PSPFileDescriptor psp_stdin()
+{
+    return sceKernelStdin();
+}
+
+PSPFileDescriptor psp_stdout()
+{
+    return sceKernelStdout();
+}
+
+PSPFileDescriptor psp_stderr()
+{
+    return sceKernelStderr();
+}
 
 PSPFileDescriptor PSP_open_file(const char *file_path, int flags, PSPAccessMode mode)
 {

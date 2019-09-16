@@ -1,10 +1,12 @@
 #ifndef PSP_IO_H
 #define PSP_IO_H
 
-// http://psp.jim.sh/pspsdk-doc/group__FileIO.html
-
 typedef int PSPFileDescriptor;
 typedef int PSPAccessMode;
+
+PSPFileDescriptor psp_stdin();
+PSPFileDescriptor psp_stdout();
+PSPFileDescriptor psp_stderr();
 
 PSPFileDescriptor PSP_open_file(const char *file_path, int flags, PSPAccessMode mode);
 int PSP_close_file(PSPFileDescriptor file);
