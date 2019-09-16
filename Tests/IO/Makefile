@@ -1,5 +1,5 @@
 TARGET = PSPIO
-OBJS = ./PSPIOTest.o ../../PSPIO/PSPIO.o ../../PSPDebug/PSPDebug.o ../../PSPInput/PSPInput.o ../../common/callback.o
+OBJS = ./PSPIOTest.o ../../PSPMemoryManagement/PSPMemoryManagement.o ../../PSPIO/PSPIO.o ../../PSPDebug/PSPDebug.o ../../PSPInput/PSPInput.o ../../common/callback.o
 
 INCDIR =
 CFLAGS = -G0 -O2 -Wall

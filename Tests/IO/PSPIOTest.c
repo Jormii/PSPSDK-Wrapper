@@ -1,8 +1,10 @@
 #include <pspkernel.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../../common/callback.h"
+#include "../../PSPMemoryManagement/PSPMemoryManagement.h"
 #include "../../PSPDebug/PSPDebug.h"
 #include "../../PSPInput/PSPInput.h"
 #include "../../PSPIO/PSPIO.h"
@@ -31,6 +33,18 @@ int main()
     setupExitCallback();
 
     debug_print("[ Debug ]\n\n");
+
+    PSPFileDescriptor psp_in = psp_stdin();
+    PSPFileDescriptor psp_out = psp_stdout();
+    PSPFileDescriptor psp_err = psp_stderr();
+
+    char *aux_string = psp_malloc(50);
+    sprintf(aux_string, "PSP stdin descriptor: %d\n", psp_in);
+    debug_print(aux_string);
+    sprintf(aux_string, "PSP stdout descriptor: %d\n", psp_out);
+    debug_print(aux_string);
+    sprintf(aux_string, "PSP stderr descriptor: %d\n", psp_err);
+    debug_print(aux_string);
 
     create_and_write_file(file);
     PSP_rename_file(file, "renamed_file.txt");
