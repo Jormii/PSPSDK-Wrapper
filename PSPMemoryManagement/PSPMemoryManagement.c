@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <pspsysmem.h>
 
 #include "./PSPMemoryManagement.h"
 
@@ -20,4 +21,14 @@ void *psp_realloc(void *ptr, size_t size)
 void psp_free(void *ptr)
 {
     free(ptr);
+}
+
+unsigned int psp_free_mem_size()
+{
+    return sceKernelTotalFreeMemSize();
+}
+
+unsigned int psp_largest_free_block()
+{
+    return sceKernelMaxFreeMemSize();
 }
