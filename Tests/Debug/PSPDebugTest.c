@@ -1,6 +1,6 @@
 #include <pspkernel.h>
 
-#include "../../common/callback.h"
+#include "../../common/callbacks.h"
 #include "../../PSPInput/PSPInput.h"
 #include "../../PSPDebug/PSPDebug.h"
 
@@ -33,10 +33,10 @@ int main(void)
 {
     init_debug();
     init_input();
-    setupExitCallback();
+    setupCallbacks();
 
     print_welcome_text();
-    while (isRunning())
+    while (running())
     {
         update_input();
         if (get_button_down(TRIANGLE_BUTTON))

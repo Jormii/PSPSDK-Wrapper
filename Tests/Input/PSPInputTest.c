@@ -1,6 +1,6 @@
 #include <pspkernel.h>
 
-#include "../../common/callback.h"
+#include "../../common/callbacks.h"
 #include "../../PSPDebug/PSPDebug.h"
 #include "../../PSPInput/PSPInput.h"
 
@@ -12,7 +12,7 @@ int main()
 {
     init_debug();
     init_input();
-    setupExitCallback();
+    setupCallbacks();
 
     debug_print("[ Debug ]\n");
     debug_print("Note: This test only reacts to the X button\n\n");
@@ -27,7 +27,7 @@ int main()
         debug_print("MEMORY STICK CONNECTED\n");
     }
 
-    while (isRunning())
+    while (running())
     {
         update_input();
 

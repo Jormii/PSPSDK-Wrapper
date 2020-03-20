@@ -1,6 +1,6 @@
 #include <pspkernel.h>
 
-#include "../../common/callback.h"
+#include "../../common/callbacks.h"
 #include "../../PSPDebug/PSPDebug.h"
 
 #define VERS 1
@@ -13,12 +13,12 @@ PSP_HEAP_SIZE_MAX();
 int main()
 {
     init_debug();
-    setupExitCallback();
+    setupCallbacks();
 
     debug_print("Hello world\n");
     debug_print("~ PSPWrapper\n");
 
-    while (isRunning())
+    while (running())
     {
     }
 

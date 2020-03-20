@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "../../common/callback.h"
+#include "../../common/callbacks.h"
 #include "../../PSPDebug/PSPDebug.h"
 #include "../../PSPMemoryManagement/PSPMemoryManagement.h"
 
@@ -13,7 +13,7 @@ PSP_HEAP_SIZE_MAX();
 int main()
 {
     init_debug();
-    setupExitCallback();
+    setupCallbacks();
 
     debug_print("[ Debug ]\n\n");
 
@@ -57,7 +57,7 @@ int main()
 
     psp_free(aux_string);
 
-    while (isRunning())
+    while (running())
     {
     }
 

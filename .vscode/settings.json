@@ -7,6 +7,9 @@
         "pspdisplay.h": "c",
         "pspdebug.h": "c",
         "string": "cpp",
-        "pspmemorymanagement.h": "c"
+        "pspmemorymanagement.h": "c",
+        "pspkernel.h": "c",
+        "callbacks.h": "c",
+        "pspinput.h": "c"
     }
 }

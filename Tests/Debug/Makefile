@@ -1,5 +1,5 @@
 TARGET = PSPDebugTest
-OBJS   = ./PSPDebugTest.o ../../PSPDebug/PSPDebug.o ../../PSPInput/PSPInput.o ../../common/callback.o
+OBJS   = ./PSPDebugTest.o ../../PSPDebug/PSPDebug.o ../../PSPInput/PSPInput.o ../../common/callbacks.o
 
 INCDIR   =
 CFLAGS   = -G0 -Wall -O2

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../common/callback.h"
+#include "../../common/callbacks.h"
 #include "../../PSPMemoryManagement/PSPMemoryManagement.h"
 #include "../../PSPDebug/PSPDebug.h"
 #include "../../PSPInput/PSPInput.h"
@@ -30,7 +30,7 @@ int main()
 {
     init_debug();
     init_input();
-    setupExitCallback();
+    setupCallbacks();
 
     debug_print("[ Debug ]\n\n");
 
@@ -60,7 +60,7 @@ int main()
 
     debug_print("Press X to quit");
 
-    while (isRunning())
+    while (running())
     {
         update_input();
 

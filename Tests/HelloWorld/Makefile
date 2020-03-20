@@ -1,5 +1,5 @@
 TARGET = HelloWorld
-OBJS   = PSPHelloWorld.o ../../common/callback.o ../../PSPDebug/PSPDebug.o
+OBJS   = PSPHelloWorld.o ../../common/callbacks.o ../../PSPDebug/PSPDebug.o
 
 INCDIR   =
 CFLAGS   = -G0 -Wall -O2
