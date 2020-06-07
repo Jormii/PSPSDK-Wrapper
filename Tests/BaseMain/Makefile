@@ -2,8 +2,8 @@ MODULE_OBJS = ./BaseMainTest.o ../../PSPDebug/PSPDebug.o
 
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = PSPBaseMainTest
-# PSP_EBOOT_ICON = ICON0.png (144x80)
-# PSP_EBOOT_PIC1 = PIC1.png (480x272)
+# PSP_EBOOT_ICON = ICON0.png (144x80 icon)
+# PSP_EBOOT_PIC1 = PIC1.png (480x272 background)
 # PSP_EBOOT_SND0 = SND0.at3
 
 # Don't modify the following
