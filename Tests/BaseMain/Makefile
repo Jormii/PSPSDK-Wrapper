@@ -8,8 +8,7 @@ PSP_EBOOT_TITLE = PSPBaseMainTest
 
 # Don't modify the following
 MODULE_OBJS_ABS = $(abspath $(MODULE_OBJS))
-MAKEFILE_PATH = $(abspath $(lastword $(MAKEFILE_LIST)))
-OUTPUT_DIR = $(abspath $(notdir $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))))
+OUTPUT_DIR = $(CURDIR)
 
 export MODULE_OBJS_ABS
 export OUTPUT_DIR
@@ -30,3 +29,6 @@ endif
 
 make-main:
 	$(MAKE) -C ../../common/ MAKEFLAGS=
+
+clean:
+	$(MAKE) -C ../../common clean
