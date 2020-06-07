@@ -13,10 +13,23 @@
 #define MIN_DEPTH_RANGE 0
 #define MAX_DEPTH_RANGE 65535
 
-typedef struct _Vector3f {
+typedef struct Vector3f
+{
     float x, y, z;
 } Vector3f;
 
 void init_graphics();
+
+void use_graphics();
+void stop_using_graphics();
+void swap_buffers();
+
+void get_vram_memory(unsigned int n_triangles, Vector3f **vertices);
+
+void clear_color_buffer(unsigned int color);
+void clear_depth_buffer(unsigned int depth);
+void change_color(unsigned int color);
+
+void draw_triangle_array_2D(Vector3f *vertices, unsigned int n_vertices);
 
 #endif
