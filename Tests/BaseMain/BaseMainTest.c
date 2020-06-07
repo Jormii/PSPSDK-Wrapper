@@ -1,14 +1,21 @@
 #include "../../PSPDebug/PSPDebug.h"
 
-void psp_initialization()
+int i = 0;
+int max = 100;
+
+void psp_initialize()
 {
     init_debug();
+    debug_print("AY LMAO");
 }
 
 void psp_main_loop()
 {
-    clear_screen();
-    debug_print("Ay LMAO");
+    if (i < max)
+    {
+        debug_print("o");
+        i += 1;
+    }
 }
 
 void psp_deinitialize()
