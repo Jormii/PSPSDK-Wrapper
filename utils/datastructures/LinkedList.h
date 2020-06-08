@@ -13,8 +13,8 @@ typedef struct LinkedListNode
 
 typedef struct LinkedList
 {
-    LinkedListNode *head;
-    LinkedListNode *tail;
+    struct LinkedListNode *head;
+    struct LinkedListNode *tail;
     int count;
     int max_count;
     unsigned long total_size;
@@ -22,11 +22,8 @@ typedef struct LinkedList
 
 /*
 Functions yet to implement:
-    - void add(e, index)
-    - void clear()
     - int contains(e)
     - e get(index)
-    - void remove(index)
     - void remove(e)
 */
 

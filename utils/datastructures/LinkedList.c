@@ -14,10 +14,21 @@ void initialize_linked_list(LinkedList *linked_list, int max_count)
 
 void clear_linked_list(LinkedList *linked_list)
 {
-    for (int i = 0; i < linked_list->count; ++i)
+    LinkedListNode *node = linked_list->head;
+    while (node->next != NULL)
     {
-        remove_linked_list(linked_list, i);
+        LinkedListNode *next_node = node->next;
+
+        free(node->data);
+        free(node);
+
+        node = next_node;
     }
+
+    linked_list->head = NULL;
+    linked_list->tail = NULL;
+    linked_list->count = 0;
+    linked_list->total_size = 0;
 }
 
 int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size)
@@ -59,8 +70,53 @@ int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size
 
 void remove_linked_list(LinkedList *linked_list, int index)
 {
+    if (index > (linked_list->count - 1) || index < 0)
+    {
+        return;
+    }
+
+    LinkedListNode *removed_node;
+    if (index == 0)
+    {
+        removed_node = linked_list->head;
+        if (linked_list->count == 1)
+        {
+            linked_list->head = NULL;
+            linked_list->tail = NULL;
+        }
+        else
+        {
+            LinkedListNode *new_head = removed_node->next;
+            linked_list->head = new_head;
+        }
+    }
+    else
+    {
+        LinkedListNode *previous_node = linked_list->head;
+        LinkedListNode *node = previous_node->next;
+        for (int i = 1; i < index; ++i)
+        {
+            node = node->next;
+            previous_node = previous_node->next;
+        }
+
+        removed_node = node;
+        LinkedListNode *next_node = node->next;
+        previous_node->next = next_node;
+        if (next_node == NULL)
+        {
+            linked_list->tail = previous_node;
+        }
+    }
+
+    linked_list->count -= 1;
+    linked_list->total_size -= removed_node->data_size;
+    free(removed_node->data);
+    free(removed_node);
 }
 
 void destroy_linked_list(LinkedList *linked_list)
 {
+    clear_linked_list(linked_list);
+    free(linked_list);
 }
