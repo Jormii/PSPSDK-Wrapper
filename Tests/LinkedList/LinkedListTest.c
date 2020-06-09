@@ -8,15 +8,15 @@ int max = 10;
 void psp_initialize()
 {
     init_debug();
-    initialize_linked_list(&list, 5);
+    ll_initialize(&list, 5);
 }
 
 void psp_main_loop()
 {
     if (i < max)
     {
-        int code = add_linked_list(&list, (void *)(&i), sizeof(int));
-        if (code == NO_ERRORS)
+        int code = ll_append(&list, (void *)(&i), sizeof(int));
+        if (code == LL_NO_ERRORS)
         {
             // LinkedListNode *tail = list.tail;
             // void *data = tail->data;
@@ -36,5 +36,5 @@ void psp_main_loop()
 
 void psp_deinitialize()
 {
-    destroy_linked_list(&list);
+    ll_destroy(&list);
 }

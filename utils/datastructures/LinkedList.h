@@ -1,10 +1,14 @@
-#ifndef PSP_LINKED_LIST_H
-#define PSP_LINKED_LIST_H
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
-#define NO_ERRORS 0
-#define ERROR_WRONG_INDEX -1
-#define ERROR_REACHED_MAX_COUNT -2
-#define ERROR_REMOVING_NULL_NODE -3
+#define LL_NO_ERRORS 0
+#define LL_ERROR_WRONG_INDEX -1
+#define LL_ERROR_REACHED_MAX_COUNT -2
+
+/* TODO: Functions yet to implement
+    - int contains(e)
+    - void remove(e)
+*/
 
 typedef struct LinkedListNode
 {
@@ -22,19 +26,13 @@ typedef struct LinkedList
     unsigned long total_size;
 } LinkedList;
 
-/*
-Functions yet to implement:
-    - int contains(e)
-    - e get(index)
-    - void remove(e)
-*/
+void ll_initialize(LinkedList **linked_list, int max_count);
+void ll_clear(LinkedList *linked_list);
+int ll_append(LinkedList *linked_list, void *data, unsigned long data_size);
+int ll_remove(LinkedList *linked_list, int index);
+int ll_get(LinkedList *linked_list, int index, LinkedListNode **node_ptr);
+void ll_destroy(LinkedList **linked_list);
 
-void initialize_linked_list(LinkedList **linked_list, int max_count);
-void clear_linked_list(LinkedList *linked_list);
-int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size);
-int remove_linked_list(LinkedList *linked_list, int index);
-void destroy_linked_list(LinkedList **linked_list);
-
-int index_belongs_to_linked_list(LinkedList *linked_list, int index);
+int ll_valid_index(LinkedList *linked_list, int index);
 
 #endif

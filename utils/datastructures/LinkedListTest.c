@@ -1,4 +1,4 @@
-#include "LinkedList.c" // TODO: .h
+#include "LinkedList.h"
 #include <stdio.h>
 
 void print_bytes(unsigned char *address, int size)
@@ -12,25 +12,26 @@ void print_bytes(unsigned char *address, int size)
 int main()
 {
     LinkedList *list = NULL;
-    initialize_linked_list(&list, 10);
+    ll_initialize(&list, 10);
 
     for (int i = 0; i < 7; ++i)
     {
-        int code = add_linked_list(list, (void *)(&i), sizeof(int));
-        if (code != NO_ERRORS)
+        int code = ll_append(list, (void *)(&i), sizeof(int));
+        if (code != LL_NO_ERRORS)
         {
             printf("Couldn't add %d to the list. Error: %d\n", i, code);
         }
     }
 
-    remove_linked_list(list, 0);
-    remove_linked_list(list, 0);
-    remove_linked_list(list, 1);
-    remove_linked_list(list, list->count - 2);
-    remove_linked_list(list, list->count - 1);
+    ll_remove(list, 0);
+    ll_remove(list, 0);
+    ll_remove(list, 1);
+    ll_remove(list, list->count - 2);
+    ll_remove(list, list->count - 1);
+    ll_remove(list, list->count - 1);
 
     char *string = "The Game";
-    add_linked_list(list, (void *)string, 9);
+    ll_append(list, (void *)string, 9);
 
     LinkedListNode *node = list->head;
     for (int i = 0; i < list->count; ++i)
@@ -42,8 +43,13 @@ int main()
         node = node->next;
     }
 
+    LinkedListNode *node_ptr = 0;
+    ll_get(list, 0, &node_ptr);
+    print_bytes((unsigned char *)(node_ptr->data), node_ptr->data_size);
+    printf("\n");
+
     printf("%s\n", (char *)(list->tail->data));
-    destroy_linked_list(&list);
+    ll_destroy(&list);
 
     return 0;
 }

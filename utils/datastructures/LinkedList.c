@@ -3,7 +3,7 @@
 
 #include "./LinkedList.h"
 
-void initialize_linked_list(LinkedList **linked_list, int max_count)
+void ll_initialize(LinkedList **linked_list, int max_count)
 {
     (*linked_list) = (LinkedList *)malloc(sizeof(LinkedList));
     (*linked_list)->head = NULL;
@@ -13,7 +13,7 @@ void initialize_linked_list(LinkedList **linked_list, int max_count)
     (*linked_list)->total_size = 0;
 }
 
-void clear_linked_list(LinkedList *linked_list)
+void ll_clear(LinkedList *linked_list)
 {
     LinkedListNode *node = linked_list->head;
     while (node->next != NULL)
@@ -32,11 +32,11 @@ void clear_linked_list(LinkedList *linked_list)
     linked_list->total_size = 0;
 }
 
-int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size)
+int ll_append(LinkedList *linked_list, void *data, unsigned long data_size)
 {
     if (linked_list->count == linked_list->max_count)
     {
-        return ERROR_REACHED_MAX_COUNT;
+        return LL_ERROR_REACHED_MAX_COUNT;
     }
 
     // Create new node
@@ -66,72 +66,80 @@ int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size
     linked_list->count += 1;
     linked_list->total_size += data_size;
 
-    return NO_ERRORS;
+    return LL_NO_ERRORS;
 }
 
-int remove_linked_list(LinkedList *linked_list, int index)
+int ll_remove(LinkedList *linked_list, int index)
 {
-    if (!index_belongs_to_linked_list(linked_list, index))
+    if (!ll_valid_index(linked_list, index))
     {
-        return ERROR_WRONG_INDEX;
+        return LL_ERROR_WRONG_INDEX;
     }
 
-    LinkedListNode *removed_node = 0;
-    if (index == 0)
+    LinkedListNode *previous_node = NULL;
+    LinkedListNode *node = linked_list->head;
+
+    for (int i = 0; i < index; ++i)
     {
-        removed_node = linked_list->head;
-        if (linked_list->count == 1)
-        {
-            linked_list->head = NULL;
-            linked_list->tail = NULL;
-        }
-        else
-        {
-            LinkedListNode *new_head = removed_node->next;
-            linked_list->head = new_head;
-        }
+        previous_node = node;
+        node = previous_node->next;
+    }
+
+    int index_is_head = index == 0;
+    int index_is_tail = index == (linked_list->count - 1);
+    if (index_is_head && index_is_tail)
+    {
+        linked_list->head = NULL;
+        linked_list->tail = NULL;
+    }
+    else if (index_is_head)
+    {
+        linked_list->head = node->next;
+    }
+    else if (index_is_tail)
+    {
+        previous_node->next = NULL;
+        linked_list->tail = previous_node;
     }
     else
     {
-        LinkedListNode *previous_node = linked_list->head;
-        LinkedListNode *node = previous_node->next;
-        for (int i = 1; i < index; ++i)
-        {
-            node = node->next;
-            previous_node = previous_node->next;
-        }
-
-        removed_node = node;
-        LinkedListNode *next_node = node->next;
-        previous_node->next = next_node;
-        if (next_node == NULL)
-        {
-            linked_list->tail = previous_node;
-        }
-    }
-
-    if (removed_node == NULL)
-    {
-        return ERROR_REMOVING_NULL_NODE;
+        previous_node->next = node->next;
     }
 
     linked_list->count -= 1;
-    linked_list->total_size -= removed_node->data_size;
-    free(removed_node->data);
-    free(removed_node);
+    linked_list->total_size -= node->data_size;
+    free(node->data);
+    free(node);
 
-    return NO_ERRORS;
+    return LL_NO_ERRORS;
 }
 
-void destroy_linked_list(LinkedList **linked_list)
+int ll_get(LinkedList *linked_list, int index, LinkedListNode **node_ptr)
 {
-    clear_linked_list(*linked_list);
+    if (!ll_valid_index(linked_list, index))
+    {
+        return LL_ERROR_WRONG_INDEX;
+    }
+
+    LinkedListNode *node = linked_list->head;
+    for (int i = 0; i < index; ++i)
+    {
+        node = node->next;
+    }
+
+    *(node_ptr) = node;
+    return LL_NO_ERRORS;
+}
+
+void ll_destroy(LinkedList **linked_list)
+{
+    ll_clear(*linked_list);
     free(*linked_list);
 
     *(linked_list) = NULL;
 }
 
-int index_belongs_to_linked_list(LinkedList *linked_list, int index)
+int ll_valid_index(LinkedList *linked_list, int index)
 {
     return index >= 0 && index < linked_list->count;
 }
