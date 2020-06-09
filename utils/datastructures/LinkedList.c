@@ -79,7 +79,8 @@ int ll_remove(LinkedList *linked_list, int index)
     LinkedListNode *previous_node = NULL;
     LinkedListNode *node = linked_list->head;
 
-    for (int i = 0; i < index; ++i)
+    int i;
+    for (i = 0; i < index; ++i)
     {
         previous_node = node;
         node = previous_node->next;
@@ -122,7 +123,8 @@ int ll_get(LinkedList *linked_list, int index, LinkedListNode **node_ptr)
     }
 
     LinkedListNode *node = linked_list->head;
-    for (int i = 0; i < index; ++i)
+    int i;
+    for (i = 0; i < index; ++i)
     {
         node = node->next;
     }

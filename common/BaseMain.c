@@ -2,8 +2,7 @@
 #include <pspdisplay.h>
 #include "./callbacks.h"
 
-#define VERS 1
-#define REVS 0
+#define PSP
 
 PSP_MODULE_INFO("PSPProgram", PSP_MODULE_USER, 1, 0);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
