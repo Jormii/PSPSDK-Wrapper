@@ -3,13 +3,14 @@
 
 #include "./LinkedList.h"
 
-void initialize_linked_list(LinkedList *linked_list, int max_count)
+void initialize_linked_list(LinkedList **linked_list, int max_count)
 {
-    linked_list->head = NULL;
-    linked_list->tail = NULL;
-    linked_list->count = 0;
-    linked_list->max_count = max_count;
-    linked_list->total_size = 0;
+    (*linked_list) = (LinkedList *)malloc(sizeof(LinkedList));
+    (*linked_list)->head = NULL;
+    (*linked_list)->tail = NULL;
+    (*linked_list)->count = 0;
+    (*linked_list)->max_count = max_count;
+    (*linked_list)->total_size = 0;
 }
 
 void clear_linked_list(LinkedList *linked_list)
@@ -39,7 +40,7 @@ int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size
     }
 
     // Create new node
-    LinkedListNode *node = malloc(sizeof(LinkedListNode));
+    LinkedListNode *node = (LinkedListNode *)malloc(sizeof(LinkedListNode));
 
     void *data_copy = malloc(data_size);
     memcpy(data_copy, data, data_size);
@@ -68,14 +69,14 @@ int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size
     return NO_ERRORS;
 }
 
-void remove_linked_list(LinkedList *linked_list, int index)
+int remove_linked_list(LinkedList *linked_list, int index)
 {
-    if (index > (linked_list->count - 1) || index < 0)
+    if (!index_belongs_to_linked_list(linked_list, index))
     {
-        return;
+        return ERROR_WRONG_INDEX;
     }
 
-    LinkedListNode *removed_node;
+    LinkedListNode *removed_node = 0;
     if (index == 0)
     {
         removed_node = linked_list->head;
@@ -109,14 +110,28 @@ void remove_linked_list(LinkedList *linked_list, int index)
         }
     }
 
+    if (removed_node == NULL)
+    {
+        return ERROR_REMOVING_NULL_NODE;
+    }
+
     linked_list->count -= 1;
     linked_list->total_size -= removed_node->data_size;
     free(removed_node->data);
     free(removed_node);
+
+    return NO_ERRORS;
 }
 
-void destroy_linked_list(LinkedList *linked_list)
+void destroy_linked_list(LinkedList **linked_list)
 {
-    clear_linked_list(linked_list);
-    free(linked_list);
+    clear_linked_list(*linked_list);
+    free(*linked_list);
+
+    *(linked_list) = NULL;
+}
+
+int index_belongs_to_linked_list(LinkedList *linked_list, int index)
+{
+    return index >= 0 && index < linked_list->count;
 }

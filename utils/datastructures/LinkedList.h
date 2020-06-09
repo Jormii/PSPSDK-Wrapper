@@ -2,7 +2,9 @@
 #define PSP_LINKED_LIST_H
 
 #define NO_ERRORS 0
-#define ERROR_REACHED_MAX_COUNT -1
+#define ERROR_WRONG_INDEX -1
+#define ERROR_REACHED_MAX_COUNT -2
+#define ERROR_REMOVING_NULL_NODE -3
 
 typedef struct LinkedListNode
 {
@@ -27,10 +29,12 @@ Functions yet to implement:
     - void remove(e)
 */
 
-void initialize_linked_list(LinkedList *linked_list, int max_count);
+void initialize_linked_list(LinkedList **linked_list, int max_count);
 void clear_linked_list(LinkedList *linked_list);
 int add_linked_list(LinkedList *linked_list, void *data, unsigned long data_size);
-void remove_linked_list(LinkedList *linked_list, int index);
-void destroy_linked_list(LinkedList *linked_list);
+int remove_linked_list(LinkedList *linked_list, int index);
+void destroy_linked_list(LinkedList **linked_list);
+
+int index_belongs_to_linked_list(LinkedList *linked_list, int index);
 
 #endif
