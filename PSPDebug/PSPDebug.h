@@ -2,7 +2,7 @@
 #define PSP_DEBUG_H
 
 void init_debug();
-void debug_print(const char *string);
+void debug_print(const char *format, ...);
 void clear_screen();
 void set_text_color(unsigned char r, unsigned char g, unsigned char b);
 void set_background_color(unsigned char r, unsigned char g, unsigned char b);

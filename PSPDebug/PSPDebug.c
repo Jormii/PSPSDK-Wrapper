@@ -1,4 +1,8 @@
 #include <string.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include <pspdebug.h>
 #include "./PSPDebug.h"
 
@@ -88,8 +92,22 @@ void init_debug()
     set_cursor_position(DEFAULT_LEFT_MARGIN, DEFAULT_TOP_MARGIN);
 }
 
-void debug_print(const char *string)
+void debug_print(const char *format, ...)
 {
+    // Format string first
+    va_list vararg;
+    va_start(vararg, format);
+
+    int length = vsnprintf(NULL, 0, format, vararg) + 1;
+    va_end(vararg);
+
+    va_start(vararg, format);
+    char *string = malloc(length);
+    vsnprintf(string, length, format, vararg);
+
+    va_end(vararg);
+
+    // Process string
     int word_length = 0;
     size_t string_length = strlen(string) + 1;
     size_t c;
@@ -105,6 +123,8 @@ void debug_print(const char *string)
             ++word_length;
         }
     }
+
+    free(string);
 }
 
 void clear_screen()

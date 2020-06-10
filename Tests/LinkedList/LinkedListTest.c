@@ -15,15 +15,10 @@ void psp_initialize()
     for (i = 0; i < 7; ++i)
     {
         int code = ll_append(list, (void *)&i, sizeof(int));
-
-        int length = snprintf(NULL, 0, "Added %d to the list. Return code: %d\n", i, code);
-        char *string = malloc(length + 1);
-        sprintf(string, "Added %d to the list. Return code: %d\n", i, code);
-        debug_print(string);
-        free(string);
+        debug_print("Trying to add %d to the list. Return code: %d\n", i, code);
     }
 
-    debug_print("\nRemoving some elements: Indeces: 0, 0, 1, L-2, L-1\n");
+    debug_print("\nRemoving some elements: Indexes: 0, 0, 1, L-2, L-1\n");
     ll_remove(list, 0);
     ll_remove(list, 0);
     ll_remove(list, 1);
@@ -51,11 +46,7 @@ void psp_initialize()
     debug_print("\n");
 
     debug_print("Printing tail of the list:");
-    int length = snprintf(NULL, 0, "%s\n", (char *)(list->tail->data));
-    string = malloc(length + 1);
-    sprintf(string, "%s\n", (char *)(list->tail->data));
-    debug_print(string);
-    free(string);
+    debug_print("%s\n", (char *)list->tail->data);
 
     ll_destroy(&list);
 }

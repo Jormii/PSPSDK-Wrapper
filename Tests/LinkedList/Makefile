@@ -1,6 +1,6 @@
 MODULE_OBJS = ./LinkedListTest.o ../../PSPDebug/PSPDebug.o ../../utils/datastructures/LinkedList.o ../../utils/Memory.o
 
-PSP_EBOOT_TITLE = PSPBaseMainTest
+PSP_EBOOT_TITLE = PSPLinkedListTests
 # PSP_EBOOT_ICON = ICON0.png (144x80 icon)
 # PSP_EBOOT_PIC1 = PIC1.png (480x272 background)
 # PSP_EBOOT_SND0 = SND0.at3
