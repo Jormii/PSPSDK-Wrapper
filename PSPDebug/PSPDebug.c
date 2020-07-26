@@ -5,16 +5,13 @@
 
 #include <pspdebug.h>
 #include "./PSPDebug.h"
-
-#define LINES_CAPACITY_VERTICAL 33
-#define CHAR_CAPACITY_HORIZONTAL 69
+#include "../utils/colors/Colors.h"
+#include "../utils/display/Display.h"
 
 #define DEFAULT_LEFT_MARGIN 1
 #define DEFAULT_RIGHT_MARGIN CHAR_CAPACITY_HORIZONTAL - 1
 #define DEFAULT_TOP_MARGIN 1
 #define DEFAULT_BOTTOM_MARGIN LINES_CAPACITY_VERTICAL - 1
-
-#define RGB(R, G, B) (R) + (G << 8) + (B << 16);
 
 typedef struct PSPDebugConfig
 {
@@ -40,7 +37,11 @@ static void special_character_found(const char *word, size_t word_length, char c
         return;
     }
 
-    int new_x_cursor_position = debug_config.cursor_x_position + word_length + 1;
+    int new_x_cursor_position = debug_config.cursor_x_position + word_length;
+    if (character_found != '\0')
+    {
+        new_x_cursor_position += 1;
+    }
 
     if (new_x_cursor_position > debug_config.right_margin)
     {

@@ -15,6 +15,11 @@ void ll_initialize(LinkedList **linked_list, int max_count)
 
 void ll_clear(LinkedList *linked_list)
 {
+    if (linked_list->count == 0)
+    {
+        return;
+    }
+
     LinkedListNode *node = linked_list->head;
     while (node->next != NULL)
     {

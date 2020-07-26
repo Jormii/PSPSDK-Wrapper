@@ -1,0 +1,7 @@
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
+#define LINES_CAPACITY_VERTICAL 33
+#define CHAR_CAPACITY_HORIZONTAL 69
+
+#endif
