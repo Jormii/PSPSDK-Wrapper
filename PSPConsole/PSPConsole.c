@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <pspkernel.h>
 #include <pspdebug.h>
 
 #include "./PSPConsole.h"
+#include "../PSPIO/PSPIO.h"
 #include "../utils/datastructures/LinkedList.h"
 #include "../utils/colors/Colors.h"
 #include "../utils/display/Display.h"
@@ -18,17 +20,15 @@ static void clear_screen(Console *console);
 static void update_screen(Console *console);
 static void update_cursor(Console *console, int x, int y);
 
-void init_console(Console **console, int line_capacity, ConsoleBounds *console_bounds)
+void init_console(Console **console, int buffer_size, ConsoleBounds *console_bounds)
 {
     pspDebugScreenInit();
 
-    int buffer_size = line_capacity + 1;
-
     (*console) = malloc(sizeof(Console));
-    (*console)->line_capacity = buffer_size;
     (*console)->max_characters_per_line = console_bounds->right_margin - console_bounds->left_margin + 1;
+    (*console)->max_lines_displayed = console_bounds->bottom_margin - console_bounds->top_margin + 1;
     (*console)->bounds = console_bounds;
-    ll_initialize(&((*console)->buffer), buffer_size);
+    ll_initialize(&((*console)->buffer), buffer_size + 1);
 
     reset_console(*(console));
 }
@@ -72,6 +72,7 @@ void console_print(Console *console, const char *format, ...)
         }
     }
 
+    console->line_displayed = MAX(0, console->buffer->count - console->max_lines_displayed);
     update_screen(console);
     free(string);
 }
@@ -80,6 +81,33 @@ void console_clear(Console *console)
 {
     clear_screen(console);
     reset_console(console);
+}
+
+void console_scroll_up(Console *console)
+{
+    if (console->line_displayed > 0)
+    {
+        console->line_displayed -= 1;
+        update_screen(console);
+    }
+}
+
+void console_scroll_down(Console *console)
+{
+    int max_cursor = MAX(0, console->buffer->count - console->max_lines_displayed);
+
+    // In case the last string in buffer is an empty line
+    char *last_string = (char *)console->buffer->tail->data;
+    if (last_string[0] == '\0')
+    {
+        max_cursor -= 1;
+    }
+
+    if (console->line_displayed < max_cursor)
+    {
+        console->line_displayed += 1;
+        update_screen(console);
+    }
 }
 
 static void reset_console(Console *console)
@@ -145,7 +173,7 @@ static void clear_screen(Console *console)
     update_cursor(console, console->bounds->left_margin, console->bounds->top_margin);
 
     int line;
-    for (line = console->bounds->top_margin; line <= console->bounds->bottom_margin; ++line)
+    for (line = console->bounds->top_margin; line < console->bounds->bottom_margin; ++line)
     {
         int c;
         for (c = 0; c < console->max_characters_per_line; ++c)
@@ -165,18 +193,25 @@ static void update_screen(Console *console)
 
     LinkedListNode *node = NULL;
     int line;
-    int limit = MIN(console->buffer->count, console->bounds->bottom_margin - console->bounds->top_margin + 1);
-    int offset = MAX(0, console->buffer->count - (console->bounds->bottom_margin - console->bounds->top_margin + 1));
+    int limit = MIN(console->buffer->count, console->max_lines_displayed);
+
+    // In order to avoid printing empty lines
+    ll_get(console->buffer, console->line_displayed + limit - 1, &node);
+    char *last_string_to_print = (char *)node->data;
+    if (last_string_to_print[0] == '\0')
+    {
+        console->line_displayed = MAX(0, console->line_displayed - 1);
+        limit = MIN(console->buffer->count - 1, console->max_lines_displayed);
+    }
+
     for (line = 0; line < limit; ++line)
     {
-        ll_get(console->buffer, line + offset, &node);
+        ll_get(console->buffer, line + console->line_displayed, &node);
 
         char *string = (char *)node->data;
-        if (strlen(string) != 0)
-        {
-            pspDebugScreenPrintData(string, node->data_size);
-            update_cursor(console, console->bounds->left_margin, console->cursor_y + 1);
-        }
+        pspDebugScreenPrintData(string, node->data_size);
+
+        update_cursor(console, console->bounds->left_margin, console->cursor_y + 1);
     }
 }
 

@@ -1,6 +1,6 @@
 MODULE_OBJS = ./ConsoleTest.o ../../PSPConsole/PSPConsole.o ../../PSPIO/PSPIO.o ../../PSPInput/PSPInput.o ../../utils/datastructures/LinkedList.o
 
-PSP_EBOOT_TITLE = PSPConsoleTest_2
+PSP_EBOOT_TITLE = PSPConsoleTest
 # PSP_EBOOT_ICON = ICON0.png (144x80 icon)
 # PSP_EBOOT_PIC1 = PIC1.png (480x272 background)
 # PSP_EBOOT_SND0 = SND0.at3
