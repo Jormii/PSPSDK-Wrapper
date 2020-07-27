@@ -6,7 +6,8 @@
 /* TODO
     - Add support for dynamic bounds
     - Remove flickering
-    - Make other console's text not dissapear
+    - Make other console's text in the same line not dissapear
+    - Add support for color
 */
 
 typedef struct ConsoleBounds

@@ -188,7 +188,6 @@ static void clear_screen(Console *console)
 static void update_screen(Console *console)
 {
     clear_screen(console);
-
     update_cursor(console, console->bounds->left_margin, console->bounds->top_margin);
 
     LinkedListNode *node = NULL;
