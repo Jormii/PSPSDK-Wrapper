@@ -166,9 +166,10 @@ static void update_screen(Console *console)
     LinkedListNode *node = NULL;
     int line;
     int limit = MIN(console->buffer->count, console->bounds->bottom_margin - console->bounds->top_margin + 1);
+    int offset = MAX(0, console->buffer->count - (console->bounds->bottom_margin - console->bounds->top_margin + 1));
     for (line = 0; line < limit; ++line)
     {
-        ll_get(console->buffer, line, &node);
+        ll_get(console->buffer, line + offset, &node);
 
         char *string = (char *)node->data;
         if (strlen(string) != 0)

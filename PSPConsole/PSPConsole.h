@@ -3,6 +3,12 @@
 
 #include "../utils/datastructures/LinkedList.h" // TODO: Find a way to remove this
 
+/* TODO
+    - Add support for dynamic bounds
+    - Remove flickering
+    - Make other console's text not dissapear
+*/
+
 typedef struct ConsoleBounds
 {
     char left_margin;
@@ -18,7 +24,7 @@ typedef struct Console
     int max_characters_per_line;
     int cursor_x;
     int cursor_y;
-    ConsoleBounds *bounds; // TODO: Add support for dynamic bounds
+    ConsoleBounds *bounds;
     LinkedList *buffer;
 } Console;
 
