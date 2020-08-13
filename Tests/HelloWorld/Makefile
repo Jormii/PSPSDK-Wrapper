@@ -1,14 +1,14 @@
 TARGET = HelloWorld
-OBJS   = PSPHelloWorld.o ../../common/callbacks.o ../../PSPDebug/PSPDebug.o
+OBJS   = ./PSPHelloWorld.o ../../common/callbacks.o ../../PSPDebug/PSPDebug.o
 
 INCDIR   =
 CFLAGS   = -G0 -Wall -O2
-CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+CXXFLAGS = $(CFLAGS) -fno-rtti -fexceptions -fno-exceptions
 ASFLAGS  = $(CFLAGS)
 
 LIBDIR  =
 LDFLAGS =
-LIBS    = -lm
+LIBS    = -lm -lstdc++
 
 BUILD_PRX = 1 
 

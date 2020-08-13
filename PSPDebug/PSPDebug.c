@@ -103,7 +103,7 @@ void debug_print(const char *format, ...)
     va_end(vararg);
 
     va_start(vararg, format);
-    char *string = malloc(length);
+    char *string = (char *)malloc(length);
     vsnprintf(string, length, format, vararg);
 
     va_end(vararg);
