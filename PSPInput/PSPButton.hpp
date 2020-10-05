@@ -1,7 +1,7 @@
 #ifndef PSP_BUTTONS_H
 #define PSP_BUTTONS_H
 
-typedef enum PSPButton
+enum PSPButton
 {
     START_BUTTON = 0x000008,
     SELECT_BUTTON = 0x000001,
@@ -14,12 +14,15 @@ typedef enum PSPButton
     CROSS_BUTTON = 0x004000,
     SQUARE_BUTTON = 0x008000,
     L_TRIGGER = 0x000100,
-    R_TRIGGER = 0x000200
-} PSPButton;
+    R_TRIGGER = 0x000200,
 
-typedef struct PSPButtonsData
-{
-    unsigned int buttons_pressed;
-} PSPButtonsData;
+    HOME_BUTTON = 0x010000,
+    SCREEN_BUTTON = 0x400000,
+    MUSIC_NOTE_BUTTON = 0x800000,
+    VOLUME_UP_BUTTON = 0x100000,
+    VOLUME_DOWN_BUTTON = 0x200000,
+    HOLD_SLIDER = 0x020000,
+    WLAN_SLIDER = 0x040000
+};
 
 #endif

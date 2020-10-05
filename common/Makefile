@@ -1,14 +1,14 @@
 TARGET = BaseMain
-OBJS = $(MODULE_OBJS_ABS) ./BaseMain.o ./callbacks.o
+OBJS = $(MODULE_OBJS_ABS) ./Main.o ./callbacks.o
 
 INCDIR =
 CFLAGS = -G0 -Wall -O2
-CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti -fexceptions
 ASFLAGS = $(CFLAGS)
 
 LIBDIR = ./
 LDFLAGS =
-LIBS = -lm
+LIBS = -lm -lstdc++
 
 BUILD_PRX = 1 
 
